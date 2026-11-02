@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Ares Vault - Professional seed-based password generator. Generates high-entropy passwords from personal anchors in a clean dashboard interface with Light and Dark modes. 100% client-side.">
+  <meta name="description" content="Ares Vault - Professional seed-based password generator. Generates high-entropy passwords from personal anchors in a clean dashboard interface with Light and Pure Black Dark modes. 100% client-side.">
   <meta name="theme-color" content="#ffffff">
   <title>Ares Vault - Professional Password Dashboard</title>
 
@@ -16,7 +16,7 @@
 </head>
 <body>
 
-  <!-- Top Navigation Bar (Stripe & Linear Inspired) -->
+  <!-- Top Navigation Bar -->
   <nav class="top-navbar" aria-label="Global navigation">
     <div class="container nav-inner">
       <a href="#" class="brand-section" aria-label="Ares Vault Home">
@@ -28,7 +28,7 @@
         </div>
         <div class="brand-title-wrap">
           <span class="brand-title">Ares Vault</span>
-          <span class="brand-tag">v2.1</span>
+          <span class="brand-tag">v2.2</span>
         </div>
       </a>
 
@@ -72,7 +72,7 @@
   <header class="page-header">
     <div class="container page-header-inner">
       <div class="page-header-text">
-        <h1>Ares Vault Password Generator</h1>
+        <h1>Dashboard</h1>
         <p>
           Synthesize high-entropy credentials from memorable personal anchors. Compute passwords locally with zero network calls and full client-side privacy.
         </p>
@@ -100,6 +100,25 @@
   <!-- Main Workspace -->
   <main class="main-workspace">
     <div class="container">
+
+      <!-- Top Overview Metrics Strip (Matching Dashboard Images) -->
+      <div class="metrics-overview-grid">
+        <div class="metric-overview-card">
+          <span class="metric-overview-label">Entropy Rating</span>
+          <div class="metric-overview-value" id="overview-entropy-rating">Fortress</div>
+          <span class="metric-overview-desc" id="overview-entropy-desc">96 bits Shannon entropy</span>
+        </div>
+        <div class="metric-overview-card">
+          <span class="metric-overview-label">Crack Resistance</span>
+          <div class="metric-overview-value" id="overview-crack-time">Centuries</div>
+          <span class="metric-overview-desc">Excludes dictionary attacks via seed salt</span>
+        </div>
+        <div class="metric-overview-card">
+          <span class="metric-overview-label">Active Archetypes</span>
+          <div class="metric-overview-value">8 Formats</div>
+          <span class="metric-overview-desc">Synthesized from 4 personal anchors</span>
+        </div>
+      </div>
       
       <div class="dashboard-layout">
         
@@ -269,7 +288,7 @@
                   <label for="opt-separator" class="field-label" style="font-size: 0.74rem;">
                     <span>Passphrase Separator</span>
                   </label>
-                  <select id="opt-separator" class="text-input" style="height: 36px; padding-left: 0.75rem;">
+                  <select id="opt-separator" class="text-input" style="height: 38px; padding-left: 0.75rem;">
                     <option value="-">Hyphen (-)</option>
                     <option value="_">Underscore (_)</option>
                     <option value="#">Hash (#)</option>
@@ -468,7 +487,7 @@
       <div class="footer-left">
         <strong>Ares Vault</strong>
         <span>•</span>
-        <span>Version 2.1.0</span>
+        <span>Version 2.2.0</span>
         <span>•</span>
         <span>Open Source Security Instrument</span>
       </div>

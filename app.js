@@ -1,7 +1,7 @@
 /**
  * Ares Vault - Seed-Based Password Generator Logic
  * Professional Linear x Stripe x Emil Kowalski Craft
- * Features Dual-Theme Engine (Light & Dark Mode)
+ * Dual-Theme Engine: Pure Black Dark & Clean White Light
  * 100% Client-side execution. Zero telemetry.
  */
 
@@ -25,6 +25,11 @@
   const optSalt = document.getElementById('opt-salt');
   const optUpper = document.getElementById('opt-upper');
   const optSeparator = document.getElementById('opt-separator');
+
+  // Top Overview Metrics Elements (Matching Dashboard Images)
+  const overviewRating = document.getElementById('overview-entropy-rating');
+  const overviewDesc = document.getElementById('overview-entropy-desc');
+  const overviewCrackTime = document.getElementById('overview-crack-time');
 
   // Outputs
   const primaryDisplay = document.getElementById('primary-password-text');
@@ -78,7 +83,6 @@
     if (savedTheme === 'dark' || savedTheme === 'light') {
       applyTheme(savedTheme);
     } else {
-      // Default to light as preferred by the user, or respect system
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       applyTheme(prefersDark ? 'dark' : 'light');
     }
@@ -89,7 +93,7 @@
         const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
         applyTheme(nextTheme);
         localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-        showToast(`Switched to ${nextTheme.charAt(0).toUpperCase() + nextTheme.slice(1)} mode`);
+        showToast(`Switched to ${nextTheme === 'dark' ? 'Pure Black' : 'Clean White'} mode`);
       });
     }
   }
@@ -98,7 +102,7 @@
     document.documentElement.setAttribute('data-theme', theme);
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', theme === 'dark' ? '#090d16' : '#ffffff');
+      metaThemeColor.setAttribute('content', theme === 'dark' ? '#0a0a0a' : '#ffffff');
     }
   }
 
@@ -469,6 +473,11 @@
     primaryStrengthValue.textContent = strength.label;
     strengthCrackTime.textContent = strength.crackTime;
     strengthEntropy.textContent = `${strength.entropy} bits`;
+
+    // Update Top Overview Metrics Strip
+    if (overviewRating) overviewRating.textContent = strength.label;
+    if (overviewDesc) overviewDesc.textContent = `${strength.entropy} bits Shannon entropy`;
+    if (overviewCrackTime) overviewCrackTime.textContent = strength.crackTime;
 
     // Clear segments
     strengthSegments.forEach(seg => {
