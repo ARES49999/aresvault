@@ -1,11 +1,16 @@
 /**
  * Ares Vault - Seed-Based Password Generator Logic
  * Professional Linear x Stripe x Emil Kowalski Craft
+ * Features Dual-Theme Engine (Light & Dark Mode)
  * 100% Client-side execution. Zero telemetry.
  */
 
 (function () {
   'use strict';
+
+  // Theme Management
+  const THEME_STORAGE_KEY = 'ares_vault_theme';
+  const btnThemeToggle = document.getElementById('btn-theme-toggle');
 
   // DOM Elements
   const form = document.getElementById('vault-form');
@@ -61,10 +66,40 @@
   };
 
   function init() {
+    initTheme();
     setupColorSwatches();
     setupEventListeners();
-    // Default demo load on launch for immediate clarity
     loadDemoSeeds();
+  }
+
+  // Dual-Theme Controller
+  function initTheme() {
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      applyTheme(savedTheme);
+    } else {
+      // Default to light as preferred by the user, or respect system
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(prefersDark ? 'dark' : 'light');
+    }
+
+    if (btnThemeToggle) {
+      btnThemeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(nextTheme);
+        localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+        showToast(`Switched to ${nextTheme.charAt(0).toUpperCase() + nextTheme.slice(1)} mode`);
+      });
+    }
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', theme === 'dark' ? '#090d16' : '#ffffff');
+    }
   }
 
   function setupColorSwatches() {

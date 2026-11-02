@@ -2,11 +2,14 @@
 
 Ares Vault is a professional single-page web dashboard for synthesizing high-entropy, deterministic passwords from personal cognitive anchors: name/handle, date of birth (DOB), favorite color, and a custom anchor word or token.
 
-Engineered with clean white UI aesthetics inspired by **Linear**, **Stripe**, and **Emil Kowalski's Design Engineering principles**.
+Engineered with clean UI aesthetics inspired by **Linear**, **Stripe**, and **Emil Kowalski's Design Engineering principles**.
 
 ## Design & Craft Standards
 
-- **Clean White Canvas**: Hairline borders (`#e2e8f0`), subtle elevation shadows, and high-density information layout.
+- **Dual-Theme Engine (Light & Dark Modes)**:
+  - Clean light canvas with hairline borders (`#e2e8f0`) and subtle elevation shadows.
+  - High-contrast obsidian dark mode (`#090d16` canvas, `#111726` surfaces, `#1e293b` borders).
+  - Seamless theme toggle in navigation bar with localStorage persistence and system color-scheme detection.
 - **Micro-Interaction Craft**:
   - Tactile button press responsiveness (`transform: scale(0.98)` on `:active`).
   - Strict typography discipline: Inter font with `-0.02em` tracking on large numerals and headings.
@@ -36,9 +39,9 @@ Engineered with clean white UI aesthetics inspired by **Linear**, **Stripe**, an
 
 ```
 aresvault/
-├── index.html        # Single-page HTML application and usage guide
-├── style.css         # Linear x Stripe light dashboard styling and craft transitions
-├── app.js            # Generation algorithms, entropy calculator, and event handling
+├── index.html        # Single-page HTML application, dual-theme navbar, and usage guide
+├── style.css         # Linear x Stripe dashboard styling with Light and Dark themes
+├── app.js            # Generation algorithms, entropy calculator, and theme engine
 ├── README.md         # Documentation, usage guide, and changelog
 └── .gitignore        # Standard Git ignore configurations
 ```
@@ -66,12 +69,16 @@ python3 -m http.server 8080
 
 ## Update Log / Changelog
 
+### Version 2.2.0 (Dual-Theme Engine: Light & Dark Modes)
+- Added dedicated Theme switcher in the top navigation bar with SVG sun and moon icons.
+- Implemented high-contrast Obsidian dark theme palette (`#090d16` canvas, `#111726` surface cards, `#1e293b` borders, and high-contrast typography).
+- Added persistent theme selection saved to `localStorage` with automatic fallback to system `prefers-color-scheme`.
+- Synchronized all files across active development branch (`dev`) and production (`main`).
+
 ### Version 2.1.0 (Clean White Professional Dashboard Redesign)
 - Replaced previous dark design with a clean, high-density white dashboard UI inspired by Linear, Stripe, and Emil Kowalski craft principles.
 - Added tabular numeral alignment (`font-variant-numeric: tabular-nums`) across all strength metrics and password strings to eliminate number jitter.
 - Implemented tactile micro-interactions with `:active` scaling, precise easing transitions, and a floating Sonner-style toast notification.
-- Redesigned color swatches, input forms, and metrics summary strip for maximum contrast and legibility.
-- Synchronized all files across active development branch (`dev`) and production (`main`).
 
 ### Version 2.0.0 (Initial Rebuild)
 - Rebuilt complete single-page Ares Vault web application with seed synthesis algorithms.
