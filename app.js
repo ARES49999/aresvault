@@ -1,7 +1,7 @@
 /**
  * Ares Vault - Seed-Based Password Generator Logic
+ * Professional Linear x Stripe x Emil Kowalski Craft
  * 100% Client-side execution. Zero telemetry.
- * Generates high-entropy passwords derived from personal anchors.
  */
 
 (function () {
@@ -13,7 +13,7 @@
   const inputDob = document.getElementById('seed-dob');
   const inputColor = document.getElementById('seed-color');
   const inputCustom = document.getElementById('seed-custom');
-  
+
   // Options
   const optLeet = document.getElementById('opt-leet');
   const optSymbols = document.getElementById('opt-symbols');
@@ -23,7 +23,6 @@
 
   // Outputs
   const primaryDisplay = document.getElementById('primary-password-text');
-  const primaryStrengthLabel = document.getElementById('strength-label');
   const primaryStrengthValue = document.getElementById('strength-value');
   const strengthCrackTime = document.getElementById('strength-crack-time');
   const strengthEntropy = document.getElementById('strength-entropy');
@@ -33,7 +32,7 @@
     document.getElementById('seg-3'),
     document.getElementById('seg-4')
   ];
-  
+
   const variationsList = document.getElementById('variations-list');
   const btnToggleVisibility = document.getElementById('btn-toggle-visibility');
   const iconEyeOpen = document.getElementById('icon-eye-open');
@@ -49,7 +48,7 @@
   let currentPrimaryPassword = '';
   let generatedVariations = [];
 
-  // Leet mapping dictionary
+  // Leetspeak substitution matrix
   const LEET_MAP = {
     'a': '@', 'A': '4',
     'e': '3', 'E': '3',
@@ -61,35 +60,34 @@
     'g': '9', 'G': '9'
   };
 
-  const SYMBOLS = ['!', '@', '#', '$', '%', '^', '&', '*', '_', '-'];
-
-  // Initialize
   function init() {
-    setupColorChips();
+    setupColorSwatches();
     setupEventListeners();
-    // Default sample on initial load for instant visual delight
-    generateAllPasswords();
+    // Default demo load on launch for immediate clarity
+    loadDemoSeeds();
   }
 
-  function setupColorChips() {
-    const chips = document.querySelectorAll('.color-chip');
-    chips.forEach(chip => {
-      chip.addEventListener('click', () => {
-        chips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        const colorVal = chip.getAttribute('data-color');
+  function setupColorSwatches() {
+    const swatches = document.querySelectorAll('.color-swatch-btn');
+    swatches.forEach(swatch => {
+      swatch.addEventListener('click', () => {
+        swatches.forEach(s => s.classList.remove('active'));
+        swatch.classList.add('active');
+        const colorVal = swatch.getAttribute('data-color');
         if (colorVal) {
           inputColor.value = colorVal;
+          if (hasAnyInput()) generateAllPasswords();
         }
       });
     });
 
     inputColor.addEventListener('input', () => {
-      chips.forEach(c => {
-        if (c.getAttribute('data-color')?.toLowerCase() === inputColor.value.trim().toLowerCase()) {
-          c.classList.add('active');
+      const current = inputColor.value.trim().toLowerCase();
+      swatches.forEach(s => {
+        if (s.getAttribute('data-color')?.toLowerCase() === current) {
+          s.classList.add('active');
         } else {
-          c.classList.remove('active');
+          s.classList.remove('active');
         }
       });
     });
@@ -101,7 +99,7 @@
       generateAllPasswords();
     });
 
-    // Keyboard shortcuts
+    // Keyboard shortcuts: Ctrl+Enter or Cmd+Enter to generate
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         e.preventDefault();
@@ -117,39 +115,31 @@
     // Copy Primary
     btnCopyPrimary.addEventListener('click', () => {
       if (!currentPrimaryPassword) return;
-      copyToClipboard(currentPrimaryPassword, 'Primary password copied to clipboard');
+      copyToClipboard(currentPrimaryPassword, 'Primary fortress password copied');
     });
 
     // Copy All
     btnCopyAll.addEventListener('click', () => {
       if (generatedVariations.length === 0) return;
       const allText = generatedVariations.map(v => `${v.category}: ${v.password}`).join('\n');
-      copyToClipboard(allText, 'All passwords copied to clipboard');
+      copyToClipboard(allText, 'All 8 password variations copied');
     });
 
     // Reset Form
     btnReset.addEventListener('click', () => {
       form.reset();
-      document.querySelectorAll('.color-chip').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.color-swatch-btn').forEach(s => s.classList.remove('active'));
       clearOutputs();
-      showToast('Vault cleared');
+      showToast('Vault parameters reset');
     });
 
     // Quick Demo
     btnQuickDemo.addEventListener('click', () => {
-      inputName.value = 'Ares';
-      inputDob.value = '2000-05-15';
-      inputColor.value = 'Crimson';
-      inputCustom.value = 'Titan';
-      
-      const redChip = document.querySelector('.color-chip[data-color="Crimson"]');
-      if (redChip) redChip.classList.add('active');
-      
-      generateAllPasswords();
-      showToast('Loaded demo seed configuration');
+      loadDemoSeeds();
+      showToast('Loaded demo parameters');
     });
 
-    // Real-time update on options toggle
+    // Real-time update on controls
     [optLeet, optSymbols, optSalt, optUpper, optSeparator].forEach(ctrl => {
       if (ctrl) {
         ctrl.addEventListener('change', () => {
@@ -161,11 +151,23 @@
     });
   }
 
+  function loadDemoSeeds() {
+    inputName.value = 'Ares';
+    inputDob.value = '2000-05-15';
+    inputColor.value = 'Crimson';
+    inputCustom.value = 'Titan';
+
+    const crimsonBtn = document.querySelector('.color-swatch-btn[data-color="Crimson"]');
+    if (crimsonBtn) crimsonBtn.classList.add('active');
+
+    generateAllPasswords();
+  }
+
   function hasAnyInput() {
     return Boolean(
-      inputName.value.trim() || 
-      inputDob.value || 
-      inputColor.value.trim() || 
+      inputName.value.trim() ||
+      inputDob.value ||
+      inputColor.value.trim() ||
       inputCustom.value.trim()
     );
   }
@@ -198,23 +200,19 @@
     return { year, shortYear, month, day, numeric: clean || `${year}${month}${day}` };
   }
 
-  // Apply leetspeak transformation
   function toLeet(text) {
     return text.split('').map(char => LEET_MAP[char] || char).join('');
   }
 
-  // Capitalize first letter
   function capitalize(str) {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  // Alternating case
   function alternatingCase(str) {
     return str.split('').map((c, i) => i % 2 === 0 ? c.toUpperCase() : c.toLowerCase()).join('');
   }
 
-  // Generate deterministic secure salt
   function generateSalt(length = 3) {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%';
     const array = new Uint32Array(length);
@@ -226,7 +224,6 @@
     return salt;
   }
 
-  // Clean strings
   function sanitize(str) {
     return (str || '').trim().replace(/\s+/g, '');
   }
@@ -250,7 +247,6 @@
 
     const saltToken = useSalt ? generateSalt(3) : '';
 
-    // Transform based on options
     let nameFormatted = capitalize(rawName);
     let colorFormatted = capitalize(rawColor);
     let customFormatted = capitalize(rawCustom);
@@ -261,49 +257,47 @@
       customFormatted = customFormatted.toUpperCase();
     }
 
-    let nameLeet = useLeet ? toLeet(nameFormatted) : nameFormatted;
-    let colorLeet = useLeet ? toLeet(colorFormatted) : colorFormatted;
-    let customLeet = useLeet ? toLeet(customFormatted) : customFormatted;
+    const nameLeet = useLeet ? toLeet(nameFormatted) : nameFormatted;
+    const colorLeet = useLeet ? toLeet(colorFormatted) : colorFormatted;
+    const customLeet = useLeet ? toLeet(customFormatted) : customFormatted;
 
-    // Algorithm 1: Fortress Tactical (Default primary)
+    // Archetype 1: Fortress Tactical (Default Primary)
     const fortress = `${colorLeet}${s1}${nameLeet}${s2}${dobObj.shortYear}${s3}${customLeet}${saltToken ? s4 + saltToken : ''}`;
 
-    // Algorithm 2: Clean Memorable Passphrase
+    // Archetype 2: Memorable Passphrase
     const sep = separator || '-';
     const passphrase = `${colorFormatted}${sep}${nameFormatted}${sep}${dobObj.year}${sep}${customFormatted}`;
 
-    // Algorithm 3: Ultra High-Entropy Shield
+    // Archetype 3: Ultra High-Entropy
     const ultra = `${s1}${customLeet.slice(0, 3)}${s2}${nameLeet}${dobObj.day}${colorLeet.slice(0, 3)}${s3}${dobObj.shortYear}${saltToken ? s4 + saltToken : ''}`;
 
-    // Algorithm 4: Compact Alphanumeric PIN / Token
+    // Archetype 4: Alphanumeric PIN / Compact
     const pin = `${nameFormatted.slice(0, 2)}${colorFormatted.slice(0, 2)}${dobObj.day}${dobObj.shortYear}${customFormatted.slice(0, 2)}`;
 
-    // Algorithm 5: Leet Titanium
+    // Archetype 5: Titanium Leet
     const leetTitanium = `${toLeet(nameFormatted)}_${toLeet(colorFormatted)}${dobObj.year}#${toLeet(customFormatted)}`;
 
-    // Algorithm 6: Alternating Wave
+    // Archetype 6: Alternating Wave
     const alternating = `${alternatingCase(nameFormatted)}${s1}${alternatingCase(colorFormatted)}${dobObj.shortYear}${s2}${customFormatted.toLowerCase()}`;
 
-    // Algorithm 7: Minimalist Dot Vault
+    // Archetype 7: Minimalist Dot Vault
     const dotVault = `${rawColor.toLowerCase()}.${rawName.toLowerCase()}.${dobObj.year}.${rawCustom.toLowerCase()}`;
 
-    // Algorithm 8: Symbol Interleaved Matrix
+    // Archetype 8: Interleaved Matrix
     const interleaved = `${s2}${colorFormatted}${s1}${nameLeet}${dobObj.shortYear}${s3}${customLeet}${s4}`;
 
-    // Update primary
     currentPrimaryPassword = fortress;
     renderPrimaryPassword(currentPrimaryPassword);
 
-    // Save list of variations
     generatedVariations = [
-      { category: 'Fortress Tactical (Primary)', password: fortress, desc: 'High-entropy combination of all personal seeds with leet & symbols' },
-      { category: 'Memorable Passphrase', password: passphrase, desc: 'Clean, human-readable phrase easy to type on touch keyboards' },
-      { category: 'Ultra High-Entropy', password: ultra, desc: 'Interleaved seeds with high brute-force resistance' },
-      { category: 'Alphanumeric Compact', password: pin, desc: 'Symbol-free alphanumeric format for systems with symbol restrictions' },
-      { category: 'Titanium Leet', password: leetTitanium, desc: 'Substituted characters adhering to high-complexity security filters' },
-      { category: 'Alternating Wave', password: alternating, desc: 'Dynamic casing rhythm for improved memorability' },
-      { category: 'Minimalist Dot Vault', password: dotVault, desc: 'Structured hierarchy format for terminal and development access' },
-      { category: 'Interleaved Matrix', password: interleaved, desc: 'Boundary symbols preventing credential stuffing attacks' }
+      { category: 'Fortress Tactical', password: fortress, desc: 'Primary credential with leetspeak, boundary symbols, and cryptographic salt' },
+      { category: 'Memorable Passphrase', password: passphrase, desc: 'Structured readable words ideal for touch screens and human recall' },
+      { category: 'Ultra High-Entropy', password: ultra, desc: 'Maximized computational complexity against offline dictionary attacks' },
+      { category: 'Alphanumeric Compact', password: pin, desc: 'Clean symbol-free string for restrictive legacy login fields' },
+      { category: 'Titanium Leet', password: leetTitanium, desc: 'Enterprise complexity standard with full alphanumeric mapping' },
+      { category: 'Alternating Wave', password: alternating, desc: 'Dynamic alternating casing cadence' },
+      { category: 'Minimalist Dot Vault', password: dotVault, desc: 'Structured hierarchy format for developers and terminals' },
+      { category: 'Interleaved Matrix', password: interleaved, desc: 'Symbol-framed sequence preventing credential stuffing' }
     ];
 
     renderVariations(generatedVariations);
@@ -315,9 +309,8 @@
     } else {
       primaryDisplay.textContent = pwd;
     }
-    primaryDisplay.classList.remove('empty-state');
-    
-    // Evaluate strength
+    primaryDisplay.classList.remove('empty');
+
     const strength = evaluatePasswordStrength(pwd);
     updateStrengthMeter(strength);
   }
@@ -326,17 +319,19 @@
     variationsList.innerHTML = '';
     variations.forEach(item => {
       const row = document.createElement('div');
-      row.className = 'variation-item';
-      
+      row.className = 'variations-row';
+
       const displayPwd = isPasswordMasked ? '•'.repeat(item.password.length) : escapeHtml(item.password);
 
       row.innerHTML = `
-        <div class="variation-info">
-          <span class="variation-category">${escapeHtml(item.category)}</span>
-          <span class="variation-password">${displayPwd}</span>
+        <div class="variation-meta">
+          <div class="variation-label-row">
+            <span class="variation-category-badge">${escapeHtml(item.category)}</span>
+          </div>
+          <span class="variation-code-string tabular-numbers">${displayPwd}</span>
         </div>
-        <button type="button" class="variation-copy-btn" data-password="${escapeHtml(item.password)}" aria-label="Copy ${escapeHtml(item.category)}">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="row-copy-btn" data-password="${escapeHtml(item.password)}" aria-label="Copy ${escapeHtml(item.category)}">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
           </svg>
@@ -344,7 +339,7 @@
         </button>
       `;
 
-      const copyBtn = row.querySelector('.variation-copy-btn');
+      const copyBtn = row.querySelector('.row-copy-btn');
       copyBtn.addEventListener('click', () => {
         copyToClipboard(item.password, `${item.category} copied`);
         copyBtn.classList.add('copied');
@@ -377,16 +372,15 @@
   function clearOutputs() {
     currentPrimaryPassword = '';
     generatedVariations = [];
-    primaryDisplay.textContent = 'Fill seeds above to generate';
-    primaryDisplay.classList.add('empty-state');
+    primaryDisplay.textContent = 'Fill seeds to generate';
+    primaryDisplay.classList.add('empty');
     variationsList.innerHTML = '';
     updateStrengthMeter({ score: 0, label: 'Waiting', entropy: 0, crackTime: 'Instant' });
   }
 
-  // Password Entropy & Crack Time Calculator
   function evaluatePasswordStrength(password) {
     if (!password) {
-      return { score: 0, label: 'Empty', entropy: 0, crackTime: '0 seconds' };
+      return { score: 0, label: 'Empty', entropy: 0, crackTime: '0s' };
     }
 
     let poolSize = 0;
@@ -400,7 +394,7 @@
     // Shannon Entropy: L * log2(poolSize)
     const entropy = Math.round(password.length * Math.log2(poolSize));
 
-    // Crack time estimation based on 10 billion guesses/second
+    // Crack time estimation based on 10^10 guesses per second
     const combinations = Math.pow(poolSize, Math.min(password.length, 32));
     const seconds = combinations / 10000000000;
 
@@ -443,23 +437,22 @@
 
     // Clear segments
     strengthSegments.forEach(seg => {
-      seg.className = 'strength-segment';
+      seg.className = 'strength-bar-cell';
     });
 
     for (let i = 0; i < strength.score; i++) {
       if (strengthSegments[i]) {
-        if (strength.score === 1) strengthSegments[i].classList.add('active-weak');
-        else if (strength.score === 2) strengthSegments[i].classList.add('active-fair');
-        else if (strength.score === 3) strengthSegments[i].classList.add('active-good');
-        else if (strength.score >= 4) strengthSegments[i].classList.add('active-strong');
+        if (strength.score === 1) strengthSegments[i].classList.add('score-weak');
+        else if (strength.score === 2) strengthSegments[i].classList.add('score-fair');
+        else if (strength.score === 3) strengthSegments[i].classList.add('score-good');
+        else if (strength.score >= 4) strengthSegments[i].classList.add('score-strong');
       }
     }
   }
 
-  // Clipboard copy with toast notification
+  // Sonner-inspired toast notification
   function copyToClipboard(text, message) {
     if (!navigator.clipboard) {
-      // Fallback
       const textarea = document.createElement('textarea');
       textarea.value = text;
       document.body.appendChild(textarea);
@@ -482,12 +475,12 @@
   function showToast(message) {
     if (!toast || !toastMessage) return;
     toastMessage.textContent = message;
-    toast.classList.add('show');
-    
+    toast.classList.add('active');
+
     if (toastTimeout) clearTimeout(toastTimeout);
     toastTimeout = setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2500);
+      toast.classList.remove('active');
+    }, 2400);
   }
 
   function escapeHtml(str) {
@@ -499,7 +492,6 @@
       .replace(/'/g, '&#039;');
   }
 
-  // Run on DOM Ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

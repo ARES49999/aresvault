@@ -3,43 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Ares Vault - High-entropy password generator derived from memorable personal anchors including name, date of birth, favorite color, and custom keywords. 100% client-side.">
-  <meta name="theme-color" content="#0a0f1d">
-  <title>Ares Vault - Seed-Based Cyber Password Generator</title>
-  
-  <!-- Google Fonts: Poppins & JetBrains Mono -->
+  <meta name="description" content="Ares Vault - Professional seed-based password generator. Generates high-entropy passwords from personal anchors in a clean white dashboard interface. 100% client-side.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Ares Vault - Professional Password Dashboard</title>
+
+  <!-- Inter & JetBrains Mono Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="bg-grid-pattern" aria-hidden="true"></div>
-  <div class="bg-ambient-glow" aria-hidden="true"></div>
 
-  <!-- App Header -->
-  <header class="app-header">
-    <div class="container header-inner">
-      <a href="#" class="brand-wrapper" aria-label="Ares Vault Home">
-        <div class="brand-icon-box">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Top Navigation Bar (Stripe & Linear Inspired) -->
+  <nav class="top-navbar" aria-label="Global navigation">
+    <div class="container nav-inner">
+      <a href="#" class="brand-section" aria-label="Ares Vault Home">
+        <div class="brand-logo-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             <path d="m9 12 2 2 4-4"></path>
           </svg>
         </div>
-        <div class="brand-title">
-          Ares<span>Vault</span>
+        <div class="brand-title-wrap">
+          <span class="brand-title">Ares Vault</span>
+          <span class="brand-tag">v2.0</span>
         </div>
-        <span class="brand-badge">Client-Side Only</span>
       </a>
 
-      <div class="header-actions">
-        <div class="status-pill">
-          <span class="status-indicator"></span>
-          <span>Zero Logs • Private</span>
+      <div class="nav-actions">
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>Client-Side Sandbox</span>
         </div>
-        <a href="#usage-section" class="header-link-btn" aria-label="Jump to Ares Vault usage guide">
+        <a href="#usage-guide" class="nav-guide-link">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M12 16v-4"></path>
@@ -49,203 +47,210 @@
         </a>
       </div>
     </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="container page-header-inner">
+      <div class="page-header-text">
+        <h1>Ares Vault Password Generator</h1>
+        <p>
+          Synthesize high-entropy credentials from memorable personal anchors. Compute passwords locally with zero network calls and full client-side privacy.
+        </p>
+      </div>
+      <div class="page-header-actions">
+        <button type="button" class="btn btn-secondary" id="btn-quick-demo">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span>Demo Data</span>
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-reset" aria-label="Clear inputs">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+            <path d="M21 3v5h-5"></path>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+            <path d="M8 16H3v5"></path>
+          </svg>
+          <span>Reset</span>
+        </button>
+      </div>
+    </div>
   </header>
 
-  <!-- Main Container -->
-  <main class="main-content">
+  <!-- Main Workspace -->
+  <main class="main-workspace">
     <div class="container">
       
-      <!-- Hero Section -->
-      <section class="hero-banner">
-        <div class="hero-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-          Deterministic Anchor Security
-        </div>
-        <h1 class="hero-title">Ares Vault Password Generator</h1>
-        <p class="hero-description">
-          Generate bulletproof, memorable passwords synthesized from your personal anchors: name, date of birth, favorite color, and custom keys.
-        </p>
-      </section>
-
-      <!-- Main Vault Grid -->
-      <div class="vault-grid">
+      <div class="dashboard-layout">
         
-        <!-- Input Form Column -->
-        <div class="card form-column">
-          <div class="card-header">
-            <div class="card-header-left">
-              <div class="card-header-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"></path>
-                  <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
+        <!-- Left Column: Input Configuration Card -->
+        <div class="card">
+          <div class="card-title-bar">
+            <div class="card-title-group">
+              <div class="card-title-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                 </svg>
               </div>
-              <h2 class="card-title">Personal Seeds</h2>
+              <h2>Seed Parameters</h2>
             </div>
-            <button type="button" id="btn-quick-demo" class="header-link-btn" aria-label="Load demo inputs">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-              </svg>
-              <span>Demo Fill</span>
-            </button>
+            <span class="card-subhint">4 Cognitive Anchors</span>
           </div>
 
           <form id="vault-form" autocomplete="off">
             
-            <!-- Name Input -->
-            <div class="form-group">
-              <label for="seed-name" class="form-label">
+            <!-- Anchor 1: Name -->
+            <div class="form-field">
+              <label for="seed-name" class="field-label">
                 <span>Name / Handle</span>
-                <span class="form-label-hint">Full name, nickname, or username</span>
+                <span class="field-label-desc">User identifier or nickname</span>
               </label>
-              <div class="input-wrapper">
-                <div class="input-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <div class="input-container">
+                <div class="field-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                   </svg>
                 </div>
-                <input type="text" id="seed-name" class="form-input" placeholder="e.g. Ares, Pranov, Alex" spellcheck="false" required>
+                <input type="text" id="seed-name" class="text-input" placeholder="e.g. Ares, Pranov, Jordan" spellcheck="false" required>
               </div>
             </div>
 
-            <!-- Date of Birth Input -->
-            <div class="form-group">
-              <label for="seed-dob" class="form-label">
+            <!-- Anchor 2: Date of Birth -->
+            <div class="form-field">
+              <label for="seed-dob" class="field-label">
                 <span>Date of Birth (DOB)</span>
-                <span class="form-label-hint">Used to extract day, month, and year</span>
+                <span class="field-label-desc">Parses day, month, and year</span>
               </label>
-              <div class="input-wrapper">
-                <div class="input-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <div class="input-container">
+                <div class="field-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                     <line x1="16" y1="2" x2="16" y2="6"></line>
                     <line x1="8" y1="2" x2="8" y2="6"></line>
                     <line x1="3" y1="10" x2="21" y2="10"></line>
                   </svg>
                 </div>
-                <input type="date" id="seed-dob" class="form-input" required>
+                <input type="date" id="seed-dob" class="text-input" required>
               </div>
             </div>
 
-            <!-- Favorite Color Input -->
-            <div class="form-group">
-              <label for="seed-color" class="form-label">
+            <!-- Anchor 3: Favorite Color -->
+            <div class="form-field">
+              <label for="seed-color" class="field-label">
                 <span>Favorite Color</span>
-                <span class="form-label-hint">Click a chip or enter any color</span>
+                <span class="field-label-desc">Click swatch or type custom</span>
               </label>
-              <div class="input-wrapper">
-                <div class="input-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
-                    <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
-                    <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
-                    <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
-                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
+              <div class="input-container">
+                <div class="field-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="m4.93 4.93 4.24 4.24"></path>
+                    <path d="m14.83 9.17 4.24-4.24"></path>
+                    <path d="m14.83 14.83 4.24 4.24"></path>
+                    <path d="m9.17 14.83-4.24 4.24"></path>
                   </svg>
                 </div>
-                <input type="text" id="seed-color" class="form-input" placeholder="e.g. Crimson, Emerald, Cyan" spellcheck="false" required>
+                <input type="text" id="seed-color" class="text-input" placeholder="e.g. Crimson, Emerald, Sapphire" spellcheck="false" required>
               </div>
-              <div class="color-chips-row">
-                <button type="button" class="color-chip" data-color="Crimson">
-                  <span class="color-dot" style="background-color: #ef4444;"></span>
-                  <span>Crimson</span>
+              <div class="color-picker-grid">
+                <button type="button" class="color-swatch-btn" data-color="Crimson" title="Crimson">
+                  <span class="swatch-pip" style="background-color: #ef4444;"></span>
+                  <span class="swatch-name">Crimson</span>
                 </button>
-                <button type="button" class="color-chip" data-color="Emerald">
-                  <span class="color-dot" style="background-color: #10b981;"></span>
-                  <span>Emerald</span>
+                <button type="button" class="color-swatch-btn" data-color="Emerald" title="Emerald">
+                  <span class="swatch-pip" style="background-color: #10b981;"></span>
+                  <span class="swatch-name">Emerald</span>
                 </button>
-                <button type="button" class="color-chip" data-color="Sapphire">
-                  <span class="color-dot" style="background-color: #3b82f6;"></span>
-                  <span>Sapphire</span>
+                <button type="button" class="color-swatch-btn" data-color="Sapphire" title="Sapphire">
+                  <span class="swatch-pip" style="background-color: #3b82f6;"></span>
+                  <span class="swatch-name">Sapphire</span>
                 </button>
-                <button type="button" class="color-chip" data-color="Obsidian">
-                  <span class="color-dot" style="background-color: #64748b;"></span>
-                  <span>Obsidian</span>
+                <button type="button" class="color-swatch-btn" data-color="Obsidian" title="Obsidian">
+                  <span class="swatch-pip" style="background-color: #475569;"></span>
+                  <span class="swatch-name">Obsidian</span>
                 </button>
-                <button type="button" class="color-chip" data-color="Violet">
-                  <span class="color-dot" style="background-color: #8b5cf6;"></span>
-                  <span>Violet</span>
+                <button type="button" class="color-swatch-btn" data-color="Violet" title="Violet">
+                  <span class="swatch-pip" style="background-color: #8b5cf6;"></span>
+                  <span class="swatch-name">Violet</span>
                 </button>
-                <button type="button" class="color-chip" data-color="Amber">
-                  <span class="color-dot" style="background-color: #f59e0b;"></span>
-                  <span>Amber</span>
+                <button type="button" class="color-swatch-btn" data-color="Amber" title="Amber">
+                  <span class="swatch-pip" style="background-color: #f59e0b;"></span>
+                  <span class="swatch-name">Amber</span>
                 </button>
               </div>
             </div>
 
-            <!-- Custom Keyword / Thing Input -->
-            <div class="form-group">
-              <label for="seed-custom" class="form-label">
-                <span>Custom Anchor Word / Thing</span>
-                <span class="form-label-hint">Pet name, city, lucky word, symbol</span>
+            <!-- Anchor 4: Custom Word / Thing -->
+            <div class="form-field">
+              <label for="seed-custom" class="field-label">
+                <span>Custom Anchor Word</span>
+                <span class="field-label-desc">Pet, lucky word, symbol, or city</span>
               </label>
-              <div class="input-wrapper">
-                <div class="input-icon">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <div class="input-container">
+                <div class="field-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2v20"></path>
                     <path d="m4.93 4.93 14.14 14.14"></path>
                     <path d="M2 12h20"></path>
                     <path d="m19.07 4.93-14.14 14.14"></path>
                   </svg>
                 </div>
-                <input type="text" id="seed-custom" class="form-input" placeholder="e.g. Titan, Shadow, Falcon, Matrix" spellcheck="false" required>
+                <input type="text" id="seed-custom" class="text-input" placeholder="e.g. Titan, Shadow, Falcon" spellcheck="false" required>
               </div>
             </div>
 
-            <!-- Security Customization Details Accordion -->
-            <details class="options-details" open>
-              <summary class="options-summary">
-                <div class="options-summary-left">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Advanced Configuration Drawer -->
+            <details class="config-drawer" open>
+              <summary class="drawer-summary">
+                <div class="summary-heading">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="3"></circle>
                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                   </svg>
                   <span>Complexity Tuning</span>
                 </div>
-                <span>Toggles</span>
+                <span class="card-subhint">Options</span>
               </summary>
-              <div class="options-content">
-                <label class="toggle-item">
-                  <span>Leet Sub (a->@, e->3, etc.)</span>
-                  <div class="toggle-switch">
+              <div class="drawer-body">
+                <label class="switch-control">
+                  <span>Leet Sub (a->@, e->3)</span>
+                  <div class="switch-shell">
                     <input type="checkbox" id="opt-leet" checked>
-                    <span class="toggle-slider"></span>
+                    <span class="switch-track"></span>
                   </div>
                 </label>
 
-                <label class="toggle-item">
+                <label class="switch-control">
                   <span>Special Symbols (!#$*)</span>
-                  <div class="toggle-switch">
+                  <div class="switch-shell">
                     <input type="checkbox" id="opt-symbols" checked>
-                    <span class="toggle-slider"></span>
+                    <span class="switch-track"></span>
                   </div>
                 </label>
 
-                <label class="toggle-item">
+                <label class="switch-control">
                   <span>Crypto Entropy Salt</span>
-                  <div class="toggle-switch">
+                  <div class="switch-shell">
                     <input type="checkbox" id="opt-salt" checked>
-                    <span class="toggle-slider"></span>
+                    <span class="switch-track"></span>
                   </div>
                 </label>
 
-                <label class="toggle-item">
+                <label class="switch-control">
                   <span>Force UPPERCASE</span>
-                  <div class="toggle-switch">
+                  <div class="switch-shell">
                     <input type="checkbox" id="opt-upper">
-                    <span class="toggle-slider"></span>
+                    <span class="switch-track"></span>
                   </div>
                 </label>
 
-                <div class="form-group" style="margin-bottom: 0; grid-column: 1 / -1;">
-                  <label for="opt-separator" class="form-label" style="font-size: 0.75rem;">
+                <div class="form-field" style="margin-bottom: 0; grid-column: 1 / -1;">
+                  <label for="opt-separator" class="field-label" style="font-size: 0.74rem;">
                     <span>Passphrase Separator</span>
                   </label>
-                  <select id="opt-separator" class="form-input" style="height: 38px; padding-left: 0.75rem;">
+                  <select id="opt-separator" class="text-input" style="height: 36px; padding-left: 0.75rem;">
                     <option value="-">Hyphen (-)</option>
                     <option value="_">Underscore (_)</option>
                     <option value="#">Hash (#)</option>
@@ -256,97 +261,93 @@
               </div>
             </details>
 
-            <!-- Buttons -->
-            <div class="button-row">
-              <button type="submit" class="btn btn-primary" id="btn-generate">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-                <span>Generate Passwords</span>
-              </button>
-              <button type="button" class="btn btn-secondary" id="btn-reset" aria-label="Clear all inputs">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-                  <path d="M21 3v5h-5"></path>
-                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-                  <path d="M8 16H3v5"></path>
-                </svg>
-                <span>Clear</span>
-              </button>
-            </div>
-            
-            <div style="font-size: 0.75rem; color: var(--color-text-dim); text-align: center; margin-top: 0.75rem;">
-              Tip: Press <kbd style="background: var(--color-bg-input); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--color-border); font-family: var(--font-mono);">Ctrl + Enter</kbd> to generate instantly
+            <!-- Submit Action Button -->
+            <button type="submit" class="btn btn-primary btn-full" id="btn-generate">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+              <span>Generate Passwords</span>
+            </button>
+
+            <div style="font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 0.75rem;">
+              Shortcut: <kbd style="background: var(--bg-subtle); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border-color); font-family: var(--font-mono);">Ctrl + Enter</kbd> to re-generate anytime
             </div>
 
           </form>
         </div>
 
-        <!-- Output Column -->
-        <div class="output-column">
+        <!-- Right Column: Results & Variations Display -->
+        <div class="results-column">
           
           <!-- Featured Result Card -->
-          <div class="card featured-card">
-            <div class="featured-label-row">
-              <span class="featured-tag">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <div class="featured-output-card">
+            <div class="output-meta-row">
+              <span class="pill-indicator">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                   <path d="m9 12 2 2 4-4"></path>
                 </svg>
-                Fortress Primary Password
+                Primary Fortress Credential
               </span>
-              <span id="strength-label" style="font-size: 0.75rem; color: var(--color-text-muted);">Real-time Analysis</span>
+              <span id="strength-label" style="font-size: 0.76rem; color: var(--text-muted); font-weight: 500;">Real-Time Entropy</span>
             </div>
 
-            <!-- Password Display Box -->
-            <div class="password-display-box">
-              <div id="primary-password-text" class="password-text empty-state">Fill seeds to generate</div>
-              <div class="password-controls">
-                <button type="button" class="icon-btn" id="btn-toggle-visibility" aria-label="Toggle password visibility">
-                  <svg id="icon-eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Password Display String -->
+            <div class="primary-password-display">
+              <div id="primary-password-text" class="password-text-string empty">Fill seeds to generate</div>
+              <div class="output-button-group">
+                <button type="button" class="btn-icon" id="btn-toggle-visibility" aria-label="Toggle password masking">
+                  <svg id="icon-eye-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                     <circle cx="12" cy="12" r="3"></circle>
                   </svg>
-                  <svg id="icon-eye-closed" style="display: none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg id="icon-eye-closed" style="display: none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
                     <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
                     <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
                     <line x1="2" y1="2" x2="22" y2="22"></line>
                   </svg>
                 </button>
-                <button type="button" class="icon-btn primary" id="btn-copy-primary" aria-label="Copy primary password">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <button type="button" class="btn btn-primary" id="btn-copy-primary" aria-label="Copy primary password">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                   </svg>
+                  <span>Copy</span>
                 </button>
               </div>
             </div>
 
-            <!-- Strength Meter -->
-            <div class="strength-meter-box">
-              <div class="strength-header">
-                <span class="strength-label">Entropy Security Rating</span>
-                <span id="strength-value" class="strength-value">Fortress</span>
+            <!-- Stripe-Style Metrics Summary Strip -->
+            <div class="metric-summary-strip">
+              <div class="metric-unit">
+                <span class="metric-caption">Security Rating</span>
+                <span id="strength-value" class="metric-data success">Fortress</span>
               </div>
-              <div class="strength-bar-track" aria-hidden="true">
-                <div id="seg-1" class="strength-segment active-strong"></div>
-                <div id="seg-2" class="strength-segment active-strong"></div>
-                <div id="seg-3" class="strength-segment active-strong"></div>
-                <div id="seg-4" class="strength-segment active-strong"></div>
+              <div class="metric-unit">
+                <span class="metric-caption">Brute Force Crack Time</span>
+                <span id="strength-crack-time" class="metric-data tabular-numbers">Centuries</span>
               </div>
-              <div class="strength-meta-row">
-                <span>Brute Force Time: <strong id="strength-crack-time" style="color: var(--color-accent-emerald);">Centuries</strong></span>
-                <span>Entropy: <strong id="strength-entropy" style="color: var(--color-primary);">96 bits</strong></span>
+              <div class="metric-unit">
+                <span class="metric-caption">Shannon Entropy</span>
+                <span id="strength-entropy" class="metric-data tabular-numbers">96 bits</span>
               </div>
+            </div>
+
+            <!-- Segmented Strength Bar -->
+            <div class="strength-progress-track" aria-hidden="true">
+              <div id="seg-1" class="strength-bar-cell score-strong"></div>
+              <div id="seg-2" class="strength-bar-cell score-strong"></div>
+              <div id="seg-3" class="strength-bar-cell score-strong"></div>
+              <div id="seg-4" class="strength-bar-cell score-strong"></div>
             </div>
           </div>
 
-          <!-- Variations List -->
-          <div class="card">
-            <div class="variations-header">
-              <div class="section-title">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-primary);">
+          <!-- Variations Panel -->
+          <div class="variations-panel">
+            <div class="variations-top-bar">
+              <div class="variations-heading">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="8" y1="6" x2="21" y2="6"></line>
                   <line x1="8" y1="12" x2="21" y2="12"></line>
                   <line x1="8" y1="18" x2="21" y2="18"></line>
@@ -354,10 +355,10 @@
                   <line x1="3" y1="12" x2="3.01" y2="12"></line>
                   <line x1="3" y1="18" x2="3.01" y2="18"></line>
                 </svg>
-                <span>Synthesized Variations</span>
+                <span>Synthesized Password Archetypes</span>
               </div>
-              <button type="button" class="header-link-btn" id="btn-copy-all" aria-label="Copy all generated variations">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <button type="button" class="btn btn-secondary" id="btn-copy-all" style="padding: 0.35rem 0.65rem; font-size: 0.78rem;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
@@ -365,8 +366,8 @@
               </button>
             </div>
 
-            <div id="variations-list" class="variations-list">
-              <!-- Dynamically populated by app.js -->
+            <div id="variations-list" class="variations-table">
+              <!-- Rendered dynamically by app.js -->
             </div>
           </div>
 
@@ -374,55 +375,53 @@
 
       </div>
 
-      <!-- Usage Guide Section -->
-      <section id="usage-section" class="usage-section">
-        <div class="usage-header">
-          <h2 class="usage-title">Ares Vault Usage & Security Guide</h2>
-          <p class="usage-subtitle">
-            How Ares Vault translates memorable personal anchors into cryptographically resilient passwords without storing any data.
+      <!-- Usage & Architecture Section (Linear Style) -->
+      <section id="usage-guide" class="doc-section">
+        <div class="doc-header">
+          <h2>Ares Vault Usage & Architecture</h2>
+          <p>
+            Ares Vault uses personal cognitive seeds to synthesize deterministic, high-entropy passwords that are easy for you to recall but computationally infeasible to brute force.
           </p>
         </div>
 
-        <div class="guide-cards-grid">
-          
-          <div class="guide-step-card">
-            <div class="step-badge">1</div>
-            <h3 class="guide-step-title">Provide Your Anchors</h3>
-            <p class="guide-step-text">
-              Enter details that are naturally easy for you to remember: your name or handle, birth date (extracting year, month, day), a favorite color, and a memorable custom word or symbol.
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-num">Step 01</div>
+            <h3>Define Cognitive Anchors</h3>
+            <p>
+              Supply parameters you inherently remember: your name or handle, birth date (from which year, month, and day are derived), a favorite color, and a memorable anchor word or token.
             </p>
           </div>
 
-          <div class="guide-step-card">
-            <div class="step-badge">2</div>
-            <h3 class="guide-step-title">Cryptographic Synthesis</h3>
-            <p class="guide-step-text">
-              Ares Vault runs client-side transformation algorithms to inject leetspeak substitutions, interleaving boundaries, and high-entropy salt to prevent dictionary and rainbow-table attacks.
+          <div class="step-card">
+            <div class="step-num">Step 02</div>
+            <h3>Deterministic Synthesis</h3>
+            <p>
+              The engine applies character substitution matrices (leetspeak), boundary framing, case rhythm, and optional cryptographic salt to expand candidate search spaces past 80-95 bits.
             </p>
           </div>
 
-          <div class="guide-step-card">
-            <div class="step-badge">3</div>
-            <h3 class="guide-step-title">Choose Your Archetype</h3>
-            <p class="guide-step-text">
-              Select between Fortress Tactical (for primary credentials), Memorable Passphrases (for mobile and daily typing), or Alphanumeric PINs (for legacy systems with symbol limits).
+          <div class="step-card">
+            <div class="step-num">Step 03</div>
+            <h3>Select Credential Archetype</h3>
+            <p>
+              Pick the format suited for your target platform: Fortress Tactical for primary master accounts, Memorable Passphrase for mobile typing, or Alphanumeric PIN for strict banking portals.
             </p>
           </div>
-
         </div>
 
-        <!-- Security Guarantee Box -->
-        <div class="security-guarantee-box">
-          <div class="security-icon-box">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Privacy & Security Guarantee Banner -->
+        <div class="privacy-banner">
+          <div class="privacy-banner-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
           </div>
-          <div class="security-content">
-            <h4>100% Client-Side Privacy Guarantee</h4>
+          <div class="privacy-banner-content">
+            <h4>100% Client-Side Memory Sandbox</h4>
             <p>
-              Ares Vault processes all inputs in your local browser sandbox memory using Web Crypto APIs. No personal data, passwords, analytics, cookies, or telemetry are ever recorded, cached to disk, or transmitted across any network. You can disconnect your internet and Ares Vault will continue operating with full functionality.
+              All inputs, computations, and entropy calculations execute strictly in your local browser runtime via the W3C Web Cryptography API. No network requests are made, no telemetry is transmitted, and no state is cached to local storage. You can disconnect your device from the internet and Ares Vault will continue functioning without interruption.
             </p>
           </div>
         </div>
@@ -432,11 +431,11 @@
     </div>
   </main>
 
-  <!-- Toast Notification -->
-  <div class="toast-container" aria-live="polite">
-    <div id="toast" class="toast">
-      <div class="toast-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Sonner-Style Floating Toast Viewport -->
+  <div class="toast-viewport" aria-live="polite">
+    <div id="toast" class="sonner-toast">
+      <div class="toast-check-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       </div>
@@ -444,18 +443,18 @@
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- App Footer -->
   <footer class="app-footer">
-    <div class="container footer-inner">
-      <div class="footer-meta">
+    <div class="container footer-content">
+      <div class="footer-left">
         <strong>Ares Vault</strong>
         <span>•</span>
         <span>Version 2.0.0</span>
         <span>•</span>
-        <span>Open Source Security Tool</span>
+        <span>Open Source Security Instrument</span>
       </div>
       <div>
-        <span>Protected with Deterministic Client-Side Entropy</span>
+        <span>Engineered with Linear x Stripe Clean UI Standards</span>
       </div>
     </div>
   </footer>
