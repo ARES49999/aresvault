@@ -73,21 +73,16 @@
   const archetypeCategoryBadge = document.getElementById('archetype-category-badge');
   const archetypePipsTrack = document.getElementById('archetype-pips-track');
   const btnCopyAll = document.getElementById('btn-copy-all');
+  const btnSaveHeroVault = document.getElementById('btn-save-hero-vault');
 
-  // DOM Elements - Token Anatomy & Cognitive Defense Lab (Card 2)
-  const tokenChipsFlow = document.getElementById('token-chips-flow');
-  const anatomySummaryText = document.getElementById('anatomy-summary-text');
-  const matrixStatusDictionary = document.getElementById('matrix-status-dictionary');
-  const matrixStatusDiversity = document.getElementById('matrix-status-diversity');
-  const matrixStatusRecall = document.getElementById('matrix-status-recall');
-  const drillInput = document.getElementById('drill-input');
-  const btnDrillToggleEye = document.getElementById('btn-drill-toggle-eye');
-  const iconDrillEyeOpen = document.getElementById('icon-drill-eye-open');
-  const iconDrillEyeClosed = document.getElementById('icon-drill-eye-closed');
-  const btnDrillHint = document.getElementById('btn-drill-hint');
-  const btnDrillVerify = document.getElementById('btn-drill-verify');
-  const drillFeedback = document.getElementById('drill-feedback');
-  const drillStatusText = document.getElementById('drill-status-text');
+  // DOM Elements - Saved Credentials Vault (Card 2)
+  const inputVaultLabel = document.getElementById('input-vault-label');
+  const btnSaveCurrentToVault = document.getElementById('btn-save-current-to-vault');
+  const vaultItemsList = document.getElementById('vault-items-list');
+  const vaultCountBadge = document.getElementById('vault-count-badge');
+  const vaultEmptyState = document.getElementById('vault-empty-state');
+  const btnExportVault = document.getElementById('btn-export-vault');
+  const btnClearVault = document.getElementById('btn-clear-vault');
 
   // Toast
   const toast = document.getElementById('toast');
@@ -269,8 +264,34 @@
       btnCopyAll.addEventListener('click', copyAllArchetypes);
     }
 
-    // Cognitive Recall Drill Setup
-    setupCognitiveDrill();
+    // Save to Vault Handlers (Card 1 & Card 2)
+    if (btnSaveHeroVault) {
+      btnSaveHeroVault.addEventListener('click', () => saveActiveCredential());
+    }
+
+    if (btnSaveCurrentToVault) {
+      btnSaveCurrentToVault.addEventListener('click', () => saveActiveCredential());
+    }
+
+    if (inputVaultLabel) {
+      inputVaultLabel.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          saveActiveCredential();
+        }
+      });
+    }
+
+    if (btnExportVault) {
+      btnExportVault.addEventListener('click', exportVault);
+    }
+
+    if (btnClearVault) {
+      btnClearVault.addEventListener('click', clearVault);
+    }
+
+    // Initialize Saved Vault items from localStorage
+    initSavedVault();
 
     // Dock Navigation Scroll
     if (dockBtnVault) {
@@ -290,7 +311,7 @@
     if (dockBtnArchetypes) {
       dockBtnArchetypes.addEventListener('click', () => {
         setActiveDock(dockBtnArchetypes);
-        const targetSection = document.getElementById('section-anatomy') || document.getElementById('section-archetypes');
+        const targetSection = document.getElementById('section-vault') || document.getElementById('section-hero');
         targetSection?.scrollIntoView({ behavior: 'smooth' });
       });
     }
@@ -685,144 +706,231 @@
 
     // 5. Ensure mask blur is synchronously applied
     applyMaskState();
-
-    // 6. Update Card 2: Token Anatomy Dissector & Defense Matrix
-    renderTokenAnatomy(active);
-
-    // 7. Reset Drill for the new active archetype
-    resetDrill();
   }
 
-  // Render Token Anatomy Dissector & Defense Matrix (Card 2)
-  function renderTokenAnatomy(active) {
-    if (!tokenChipsFlow) return;
-    tokenChipsFlow.innerHTML = '';
-    const tokens = active.tokens || [];
-    tokens.forEach(tok => {
-      if (!tok.val) return;
-      const chip = document.createElement('span');
-      chip.className = `token-chip ${tok.type || 'chip-handle'}`;
-      chip.innerHTML = `<span class="chip-label">${escapeHtml(tok.label)}</span><span class="chip-val">${escapeHtml(tok.val)}</span>`;
-      tokenChipsFlow.appendChild(chip);
+  // ==========================================================================
+  // Saved Credentials Vault (Card 2)
+  // ==========================================================================
+  const VAULT_STORAGE_KEY = 'ares_saved_vault_items';
+  let savedVaultItems = [];
+
+  // Initialize Saved Vault
+  function initSavedVault() {
+    try {
+      const stored = localStorage.getItem(VAULT_STORAGE_KEY);
+      if (stored) {
+        savedVaultItems = JSON.parse(stored);
+      } else {
+        // Pre-populate with 3 clean, practical starter items from current seeds
+        savedVaultItems = [
+          {
+            id: 'sample-1',
+            label: 'Google Account',
+            format: 'Fortress Tactical',
+            value: generatedArchetypes[0]?.value || 'Cr1ms0n#Ar3s$!00$T1t4n@*8rv',
+            createdAt: new Date().toLocaleDateString()
+          },
+          {
+            id: 'sample-2',
+            label: 'GitHub Developer Token',
+            format: 'Developer CLI Token',
+            value: generatedArchetypes[2]?.value || 'ar3s_live_2k00_crm_ttn_8rv',
+            createdAt: new Date().toLocaleDateString()
+          },
+          {
+            id: 'sample-3',
+            label: 'Home Wi-Fi Network',
+            format: 'Memorable Passphrase',
+            value: generatedArchetypes[1]?.value || 'Cr1ms0n-Ar3s-00-T1t4n!',
+            createdAt: new Date().toLocaleDateString()
+          }
+        ];
+        saveVaultToStorage();
+      }
+    } catch (e) {
+      savedVaultItems = [];
+    }
+    renderVaultList();
+  }
+
+  function saveVaultToStorage() {
+    try {
+      localStorage.setItem(VAULT_STORAGE_KEY, JSON.stringify(savedVaultItems));
+    } catch (e) {}
+  }
+
+  // Render Saved Vault Items List
+  function renderVaultList() {
+    if (!vaultItemsList) return;
+    vaultItemsList.innerHTML = '';
+
+    const count = savedVaultItems.length;
+    if (vaultCountBadge) {
+      vaultCountBadge.textContent = `${count} Saved`;
+    }
+
+    if (count === 0) {
+      if (vaultEmptyState) vaultEmptyState.style.display = 'flex';
+      return;
+    }
+
+    if (vaultEmptyState) vaultEmptyState.style.display = 'none';
+
+    savedVaultItems.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'vault-item-row';
+      row.setAttribute('data-id', item.id);
+
+      // Initial letters for avatar (e.g. "G" for Google, "GH" for GitHub)
+      const words = item.label.split(/\s+/).filter(Boolean);
+      let initial = words[0] ? words[0].slice(0, 1) : 'V';
+      if (words.length > 1 && words[1]) {
+        initial += words[1].slice(0, 1);
+      }
+      initial = initial.toUpperCase();
+
+      row.innerHTML = `
+        <div class="vault-item-left">
+          <div class="vault-service-avatar">${escapeHtml(initial)}</div>
+          <div class="vault-service-details">
+            <div class="vault-service-title-row">
+              <span class="vault-service-name">${escapeHtml(item.label)}</span>
+              <span class="status-pill-badge pill-ongoing">${escapeHtml(item.format || 'Tactical')}</span>
+            </div>
+            <div class="vault-service-pwd-wrap">
+              <span class="vault-pwd-masked">••••••••••••••••••••</span>
+              <span class="vault-pwd-plain" style="display: none;">${escapeHtml(item.value)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="vault-item-actions">
+          <button type="button" class="btn-vault-action-small btn-vault-toggle-eye" title="Reveal / Hide Password">
+            <svg class="eye-open-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <svg class="eye-closed-svg" style="display: none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          </button>
+          <button type="button" class="copy-archetype-btn btn-vault-copy" title="Copy password">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span class="copy-label">Copy</span>
+          </button>
+          <button type="button" class="btn-vault-action-small btn-vault-delete" title="Delete credential">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </button>
+        </div>
+      `;
+
+      // Wire Eye Toggle
+      const btnEye = row.querySelector('.btn-vault-toggle-eye');
+      const pwdMasked = row.querySelector('.vault-pwd-masked');
+      const pwdPlain = row.querySelector('.vault-pwd-plain');
+      const iconOpen = row.querySelector('.eye-open-svg');
+      const iconClosed = row.querySelector('.eye-closed-svg');
+
+      btnEye?.addEventListener('click', () => {
+        const isCurrentlyMasked = pwdPlain.style.display === 'none';
+        pwdPlain.style.display = isCurrentlyMasked ? 'inline' : 'none';
+        pwdMasked.style.display = isCurrentlyMasked ? 'none' : 'inline';
+        if (iconOpen) iconOpen.style.display = isCurrentlyMasked ? 'none' : 'block';
+        if (iconClosed) iconClosed.style.display = isCurrentlyMasked ? 'block' : 'none';
+      });
+
+      // Wire Copy Button
+      const btnCopy = row.querySelector('.btn-vault-copy');
+      const copyLabel = row.querySelector('.copy-label');
+      btnCopy?.addEventListener('click', () => {
+        copyToClipboard(item.value, () => {
+          btnCopy.classList.add('copied');
+          if (copyLabel) copyLabel.textContent = 'Copied';
+          setTimeout(() => {
+            btnCopy.classList.remove('copied');
+            if (copyLabel) copyLabel.textContent = 'Copy';
+          }, 1800);
+          showToast(`Copied ${item.label} password`);
+        });
+      });
+
+      // Wire Delete Button
+      const btnDel = row.querySelector('.btn-vault-delete');
+      btnDel?.addEventListener('click', () => {
+        deleteVaultItem(item.id);
+      });
+
+      vaultItemsList.appendChild(row);
     });
-
-    if (anatomySummaryText) {
-      anatomySummaryText.textContent = `Synthesized deterministically from ${tokens.length} anchor elements. Category: ${active.category} (${active.value.length} chars). Immune to rainbow tables.`;
-    }
-
-    // Update Defense Matrix
-    const pwd = active.value;
-    let poolCount = 0;
-    if (/[a-z]/.test(pwd)) poolCount++;
-    if (/[A-Z]/.test(pwd)) poolCount++;
-    if (/[0-9]/.test(pwd)) poolCount++;
-    if (/[^a-zA-Z0-9]/.test(pwd)) poolCount++;
-
-    if (matrixStatusDiversity) {
-      matrixStatusDiversity.textContent = `${poolCount} / 4 Pools`;
-      matrixStatusDiversity.className = poolCount === 4 ? 'status-pill-badge pill-complete' : 'status-pill-badge pill-ongoing';
-    }
-
-    if (matrixStatusDictionary) {
-      matrixStatusDictionary.textContent = 'Shielded';
-      matrixStatusDictionary.className = 'status-pill-badge pill-complete';
-    }
-
-    if (matrixStatusRecall) {
-      matrixStatusRecall.textContent = 'Optimal';
-      matrixStatusRecall.className = 'status-pill-badge pill-complete';
-    }
   }
 
-  // Cognitive Recall Drill Setup
-  function setupCognitiveDrill() {
-    if (drillInput) {
-      drillInput.addEventListener('input', handleDrillInput);
-      drillInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          handleDrillVerify();
-        }
-      });
-    }
+  // Save Active Credential into Saved Vault
+  function saveActiveCredential(customLabel) {
+    if (!currentPrimaryPassword) return;
+    const active = generatedArchetypes[activeArchetypeIndex] || {};
+    const inputVal = inputVaultLabel?.value.trim();
+    const label = customLabel || inputVal || `${active.name || 'Credential'} (${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})`;
 
-    if (btnDrillToggleEye) {
-      btnDrillToggleEye.addEventListener('click', () => {
-        if (!drillInput) return;
-        const isPassword = drillInput.type === 'password';
-        drillInput.type = isPassword ? 'text' : 'password';
-        if (iconDrillEyeOpen) iconDrillEyeOpen.style.display = isPassword ? 'none' : 'block';
-        if (iconDrillEyeClosed) iconDrillEyeClosed.style.display = isPassword ? 'block' : 'none';
-      });
-    }
+    const newItem = {
+      id: `item-${Date.now()}`,
+      label: label,
+      format: active.name || 'Tactical',
+      value: currentPrimaryPassword,
+      createdAt: new Date().toLocaleDateString()
+    };
 
-    if (btnDrillHint) {
-      btnDrillHint.addEventListener('click', () => {
-        if (!currentPrimaryPassword) return;
-        const active = generatedArchetypes[activeArchetypeIndex];
-        const tokens = active?.tokens || [];
-        const tokenNames = tokens.map(t => `[${t.label}: ${t.val}]`).join(' + ');
-        if (drillFeedback && drillStatusText) {
-          drillFeedback.className = 'drill-feedback-bar match-progress';
-          drillStatusText.textContent = `Anatomy sequence: ${tokenNames}`;
-        }
-      });
-    }
+    savedVaultItems.unshift(newItem);
+    saveVaultToStorage();
+    renderVaultList();
 
-    if (btnDrillVerify) {
-      btnDrillVerify.addEventListener('click', handleDrillVerify);
-    }
+    if (inputVaultLabel) inputVaultLabel.value = '';
+    showToast(`Saved "${label}" to vault!`);
+
+    // Smooth scroll down to the saved vault card
+    document.getElementById('section-vault')?.scrollIntoView({ behavior: 'smooth' });
   }
 
-  function handleDrillInput() {
-    if (!drillInput || !drillFeedback || !drillStatusText) return;
-    const typed = drillInput.value;
-    const target = currentPrimaryPassword;
+  // Delete Item
+  function deleteVaultItem(id) {
+    const item = savedVaultItems.find(i => i.id === id);
+    savedVaultItems = savedVaultItems.filter(i => i.id !== id);
+    saveVaultToStorage();
+    renderVaultList();
+    showToast(`Removed ${item ? item.label : 'credential'} from vault`);
+  }
 
-    if (!typed) {
-      drillFeedback.className = 'drill-feedback-bar';
-      drillStatusText.textContent = 'Practice mental recall above without looking at your password.';
+  // Clear Entire Vault
+  function clearVault() {
+    if (!savedVaultItems.length) return;
+    savedVaultItems = [];
+    saveVaultToStorage();
+    renderVaultList();
+    showToast('Saved vault cleared');
+  }
+
+  // Export Vault Backup
+  function exportVault() {
+    if (!savedVaultItems.length) {
+      showToast('Vault is empty, nothing to export');
       return;
     }
-
-    if (typed === target) {
-      drillFeedback.className = 'drill-feedback-bar match-success';
-      drillStatusText.textContent = '100% Perfect Recall! You have committed this credential to memory.';
-      return;
-    }
-
-    if (target.startsWith(typed)) {
-      drillFeedback.className = 'drill-feedback-bar match-progress';
-      drillStatusText.textContent = `Matching: ${typed.length} / ${target.length} characters correct...`;
-    } else {
-      let mismatchPos = 0;
-      while (mismatchPos < typed.length && mismatchPos < target.length && typed[mismatchPos] === target[mismatchPos]) {
-        mismatchPos++;
-      }
-      drillFeedback.className = 'drill-feedback-bar match-error';
-      drillStatusText.textContent = `Mismatch at position ${mismatchPos + 1}. Check your anchor sequence or symbol.`;
-    }
-  }
-
-  function handleDrillVerify() {
-    if (!drillInput) return;
-    const typed = drillInput.value;
-    const target = currentPrimaryPassword;
-    if (typed === target) {
-      if (drillFeedback && drillStatusText) {
-        drillFeedback.className = 'drill-feedback-bar match-success';
-        drillStatusText.textContent = '100% Perfect Recall! You have committed this credential to memory.';
-      }
-      showToast('Cognitive Recall Verified 100%!');
-    } else {
-      handleDrillInput();
-      showToast('Recall incomplete. Keep practicing!');
-    }
-  }
-
-  function resetDrill() {
-    if (drillInput) drillInput.value = '';
-    if (drillFeedback) drillFeedback.className = 'drill-feedback-bar';
-    if (drillStatusText) drillStatusText.textContent = 'Practice mental recall above without looking at your password.';
+    const dataStr = JSON.stringify(savedVaultItems, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ares-vault-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('Vault backup downloaded');
   }
 
   // Render 8 numbered quick-switch capsules

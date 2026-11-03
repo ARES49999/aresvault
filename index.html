@@ -279,7 +279,7 @@
         </svg>
       </button>
 
-      <button type="button" class="dock-btn" id="dock-btn-archetypes" title="Defense Lab &amp; Token Anatomy">
+      <button type="button" class="dock-btn" id="dock-btn-archetypes" title="Saved Passwords Vault">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="7" height="7"></rect>
           <rect x="14" y="3" width="7" height="7"></rect>
@@ -405,6 +405,15 @@
                     </svg>
                   </button>
 
+                  <!-- Save to Vault Button -->
+                  <button type="button" class="card-action-btn" id="btn-save-hero-vault" title="Save this credential to vault">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                      <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                      <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                  </button>
+
                   <!-- Copy Primary Button -->
                   <button type="button" class="copy-primary-btn" id="btn-copy-primary">
                     <svg class="copy-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -475,112 +484,60 @@
               </div>
             </article>
 
-            <!-- Token Anatomy & Cognitive Defense Lab (Card 2) -->
-            <article class="glass-subcard anatomy-section" id="section-anatomy">
+            <!-- Saved Credentials Vault (Card 2) -->
+            <article class="glass-subcard vault-storage-section" id="section-vault">
               <div class="section-title-row">
                 <div class="title-left">
-                  <h2 class="subcard-title">Token Anatomy &amp; Defense Lab</h2>
-                  <span class="subcard-subtitle">Deterministic Anchor Breakdown &amp; Cognitive Retention Lab</span>
+                  <h2 class="subcard-title">Saved Vault</h2>
+                  <span class="subcard-subtitle">Local credentials stored on this device</span>
                 </div>
-                <div class="anatomy-header-badge">
-                  <span class="status-pill-badge pill-complete" id="anatomy-live-badge">Verified Deterministic</span>
-                </div>
-              </div>
-
-              <!-- Cryptographic Anchor Breakdown Flow -->
-              <div class="anatomy-dissector-wrap">
-                <div class="dissector-header">
-                  <span class="dissector-label">CRYPTOGRAPHIC ANCHOR BREAKDOWN</span>
-                  <span class="dissector-hint">Mental anchors mapped into high-entropy tokens</span>
-                </div>
-                <div class="token-chips-flow" id="token-chips-flow">
-                  <!-- Dynamically rendered tokens -->
-                </div>
-                <div class="anatomy-summary-text" id="anatomy-summary-text">
-                  Synthesized from 4 cognitive anchors with deterministic salt. Zero dictionary words exposed.
-                </div>
-              </div>
-
-              <!-- Defense Verification Matrix (Reference UI Challenges Style) -->
-              <div class="defense-matrix-wrap">
-                <div class="defense-row">
-                  <div class="defense-row-left">
-                    <div class="defense-icon-badge defense-icon-shield">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        <polyline points="9 12 11 14 15 10"></polyline>
-                      </svg>
-                    </div>
-                    <div class="defense-text-group">
-                      <span class="defense-name">Dictionary Attack Immunity</span>
-                      <span class="defense-desc">Zero dictionary words. Immune to rainbow tables &amp; wordlist attacks.</span>
-                    </div>
-                  </div>
-                  <span class="status-pill-badge pill-complete" id="matrix-status-dictionary">Shielded</span>
-                </div>
-
-                <div class="defense-row">
-                  <div class="defense-row-left">
-                    <div class="defense-icon-badge defense-icon-pool">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                      </svg>
-                    </div>
-                    <div class="defense-text-group">
-                      <span class="defense-name">Character Pool Diversity</span>
-                      <span class="defense-desc">Uppercase, lowercase, numeric digits, and special symbols.</span>
-                    </div>
-                  </div>
-                  <span class="status-pill-badge pill-ongoing" id="matrix-status-diversity">4 / 4 Pools</span>
-                </div>
-
-                <div class="defense-row">
-                  <div class="defense-row-left">
-                    <div class="defense-icon-badge defense-icon-memory">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                      </svg>
-                    </div>
-                    <div class="defense-text-group">
-                      <span class="defense-name">Cognitive Reconstruction</span>
-                      <span class="defense-desc">Reconstructible anywhere from memory without cloud sync.</span>
-                    </div>
-                  </div>
-                  <span class="status-pill-badge pill-complete" id="matrix-status-recall">Optimal</span>
-                </div>
-              </div>
-
-              <!-- Interactive Cognitive Recall Drill -->
-              <div class="memory-drill-box">
-                <div class="drill-header-row">
-                  <div class="drill-title-wrap">
-                    <span class="drill-title">Cognitive Recall Drill</span>
-                    <span class="drill-desc">Test mental retention: practice typing your credential from memory</span>
-                  </div>
-                  <button type="button" class="btn-text-action" id="btn-drill-hint" title="Reveal the next anchor fragment as a memory clue">Hint</button>
-                </div>
-
-                <div class="drill-input-group">
-                  <input type="password" class="drill-input" id="drill-input" placeholder="Type token from memory..." autocomplete="off" spellcheck="false" aria-label="Practice typing credential">
-                  <button type="button" class="card-action-btn drill-eye-btn" id="btn-drill-toggle-eye" title="Show / Hide input text">
-                    <svg id="icon-drill-eye-open" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                      <circle cx="12" cy="12" r="3"></circle>
+                <div class="vault-header-actions">
+                  <span class="vault-count-badge" id="vault-count-badge">3 Saved</span>
+                  <button type="button" class="btn-text-action" id="btn-export-vault" title="Export all saved credentials as JSON">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
                     </svg>
-                    <svg id="icon-drill-eye-closed" style="display: none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                      <line x1="1" y1="1" x2="23" y2="23"></line>
-                    </svg>
+                    <span>Export</span>
                   </button>
-                  <button type="button" class="drill-verify-btn" id="btn-drill-verify">Verify Recall</button>
+                  <button type="button" class="btn-text-action" id="btn-clear-vault" title="Clear all saved credentials">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span>Clear</span>
+                  </button>
                 </div>
+              </div>
 
-                <div class="drill-feedback-bar" id="drill-feedback">
-                  <span class="drill-status-text" id="drill-status-text">Practice mental recall above without looking at your password.</span>
+              <!-- Quick Save Form Row -->
+              <div class="vault-quick-save-row">
+                <input type="text" class="vault-label-input" id="input-vault-label" placeholder="Save as (e.g. Google, Work, WiFi)..." maxlength="32" autocomplete="off" spellcheck="false" aria-label="Credential Label">
+                <button type="button" class="vault-add-btn" id="btn-save-current-to-vault" title="Save active password to vault">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span>Save Active</span>
+                </button>
+              </div>
+
+              <!-- Saved Passwords List Container -->
+              <div class="vault-items-list" id="vault-items-list" role="list" aria-label="Saved Credentials">
+                <!-- Dynamically populated via app.js -->
+              </div>
+
+              <!-- Empty State (Shown when vault has 0 items) -->
+              <div class="vault-empty-state" id="vault-empty-state" style="display: none;">
+                <div class="empty-state-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
                 </div>
+                <span class="empty-state-title">No Saved Credentials</span>
+                <span class="empty-state-desc">Type a label above and click 'Save Active' to save your generated passwords here.</span>
               </div>
             </article>
 
