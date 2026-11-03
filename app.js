@@ -112,7 +112,9 @@
 
   // Theme Management
   function initTheme() {
-    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || document.documentElement.getAttribute('data-theme') || 'dark';
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTheme = urlParams.get('theme');
+    const savedTheme = urlTheme || localStorage.getItem(THEME_STORAGE_KEY) || document.documentElement.getAttribute('data-theme') || 'dark';
     applyTheme(savedTheme);
 
     if (dockBtnTheme) {
