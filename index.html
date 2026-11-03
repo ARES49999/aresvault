@@ -279,7 +279,7 @@
         </svg>
       </button>
 
-      <button type="button" class="dock-btn" id="dock-btn-archetypes" title="Synthesized Archetypes">
+      <button type="button" class="dock-btn" id="dock-btn-archetypes" title="Defense Lab &amp; Token Anatomy">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="7" height="7"></rect>
           <rect x="14" y="3" width="7" height="7"></rect>
@@ -360,14 +360,40 @@
           <!-- Left Column: Primary Credential + Synthesized Archetypes List -->
           <section class="console-column column-left">
 
-            <!-- Primary Credential Card (Hero Studio) -->
+            <!-- Deterministic Credential Studio (Card 1) -->
             <article class="glass-subcard primary-credential-card" id="section-hero">
               <div class="card-header-row">
                 <div class="card-label-badge">
                   <span class="badge-tag">PRIMARY VAULT CREDENTIAL</span>
-                  <span class="badge-sub" id="active-credential-badge">Fortress Tactical</span>
+                  <div class="format-badge-row">
+                    <span class="badge-sub" id="active-credential-badge">Fortress Tactical</span>
+                    <span class="status-pill-badge pill-ongoing" id="archetype-category-badge">Fortress</span>
+                  </div>
                 </div>
+
                 <div class="credential-actions">
+                  <!-- Stepper: 1 / 8 with Prev / Next -->
+                  <div class="format-stepper-control">
+                    <div class="archetype-counter-badge" id="archetype-counter-badge" title="Active Format Index">
+                      <span id="archetype-counter-current">1</span>
+                      <span class="counter-sep">/</span>
+                      <span id="archetype-counter-total">8</span>
+                    </div>
+                    <div class="archetype-nav-arrows">
+                      <button type="button" class="stepper-arrow-btn" id="btn-archetype-prev" title="Previous Format (Arrow Left)" aria-label="Previous Format">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                      </button>
+                      <button type="button" class="stepper-arrow-btn" id="btn-archetype-next" title="Next Format (Arrow Right)" aria-label="Next Format">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Visibility Toggle Button -->
                   <button type="button" class="card-action-btn" id="btn-toggle-visibility" title="Mask / Unmask">
                     <svg id="icon-eye-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -378,6 +404,8 @@
                       <line x1="1" y1="1" x2="23" y2="23"></line>
                     </svg>
                   </button>
+
+                  <!-- Copy Primary Button -->
                   <button type="button" class="copy-primary-btn" id="btn-copy-primary">
                     <svg class="copy-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -392,6 +420,9 @@
               <div class="password-monolith-box">
                 <span id="primary-password-text" class="password-text-string">Cr1m$0n#4r3$!00$717@n*koa</span>
               </div>
+
+              <!-- Format Description -->
+              <div class="active-format-desc" id="archetype-desc">Multi-set leet token with cryptographic seed salt</div>
 
               <!-- Segmented Strength Track -->
               <div class="strength-track-wrap">
@@ -418,89 +449,137 @@
                   <span class="meta-value" id="strength-entropy">164 bits</span>
                 </div>
               </div>
+
+              <!-- Quick-Jump Capsule Bar: [1] [2] [3] [4] [5] [6] [7] [8] + Copy All -->
+              <div class="format-capsule-bar">
+                <div class="capsule-bar-left">
+                  <span class="capsule-bar-label">FORMATS</span>
+                  <div class="archetype-pips-track" id="archetype-pips-track" role="tablist" aria-label="Format Quick Jump">
+                    <button type="button" class="archetype-pip-btn active" data-pip-index="0" role="tab" aria-selected="true" title="1. Fortress Tactical">1</button>
+                    <button type="button" class="archetype-pip-btn" data-pip-index="1" role="tab" aria-selected="false" title="2. Memorable Passphrase">2</button>
+                    <button type="button" class="archetype-pip-btn" data-pip-index="2" role="tab" aria-selected="false" title="3. Developer CLI Token">3</button>
+                    <button type="button" class="archetype-pip-btn" data-pip-index="3" role="tab" aria-selected="false" title="4. Alphanumeric PIN">4</button>
+                    <button type="button" class="archetype-pip-btn" data-pip-index="4" role="tab" aria-selected="false" title="5. Ultra High-Entropy">5</button>
+                    <button type="button" class="archetype-pip-btn" data-pip-index="5" role="tab" aria-selected="false" title="6. Compact Mobile">6</button>
+                    <button type="button" class="archetype-pip-btn" data-pip-index="6" role="tab" aria-selected="false" title="7. Enterprise Compliant">7</button>
+                    <button type="button" class="archetype-pip-btn" data-pip-index="7" role="tab" aria-selected="false" title="8. Kebab Identifier">8</button>
+                  </div>
+                </div>
+                <button type="button" class="btn-text-action" id="btn-copy-all" title="Copy all 8 archetypes">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span>Copy All</span>
+                </button>
+              </div>
             </article>
 
-            <!-- Synthesized Password Archetype Switcher (Single-Item Focused Carousel) -->
-            <article class="glass-subcard archetypes-section" id="section-archetypes">
+            <!-- Token Anatomy & Cognitive Defense Lab (Card 2) -->
+            <article class="glass-subcard anatomy-section" id="section-anatomy">
               <div class="section-title-row">
                 <div class="title-left">
-                  <h2 class="subcard-title">Synthesized Archetypes</h2>
-                  <span class="subcard-subtitle">Deterministic Format Switcher</span>
+                  <h2 class="subcard-title">Token Anatomy &amp; Defense Lab</h2>
+                  <span class="subcard-subtitle">Deterministic Anchor Breakdown &amp; Cognitive Retention Lab</span>
                 </div>
-                <div class="archetype-header-controls">
-                  <!-- Counter Badge: e.g. "1 / 8" -->
-                  <div class="archetype-counter-badge" id="archetype-counter-badge" title="Active Format Index">
-                    <span id="archetype-counter-current">1</span>
-                    <span class="counter-sep">/</span>
-                    <span id="archetype-counter-total">8</span>
-                  </div>
-
-                  <!-- Prev / Next Navigation Arrows -->
-                  <div class="archetype-nav-arrows">
-                    <button type="button" class="archetype-nav-btn" id="btn-archetype-prev" title="Previous Archetype (Arrow Left)" aria-label="Previous Archetype">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                      </svg>
-                    </button>
-                    <button type="button" class="archetype-nav-btn" id="btn-archetype-next" title="Next Archetype (Arrow Right)" aria-label="Next Archetype">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                      </svg>
-                    </button>
-                  </div>
-
-                  <!-- Copy All Button -->
-                  <button type="button" class="btn-text-action" id="btn-copy-all" title="Copy all 8 archetypes">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    <span>Copy All</span>
-                  </button>
+                <div class="anatomy-header-badge">
+                  <span class="status-pill-badge pill-complete" id="anatomy-live-badge">Verified Deterministic</span>
                 </div>
               </div>
 
-                            <!-- Single Active Archetype Showcase Card -->
-              <div class="active-archetype-showcase" id="active-archetype-card">
-                <div class="archetype-card-meta">
-                  <div class="archetype-meta-main">
-                    <div class="archetype-indicator-pip">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
+              <!-- Cryptographic Anchor Breakdown Flow -->
+              <div class="anatomy-dissector-wrap">
+                <div class="dissector-header">
+                  <span class="dissector-label">CRYPTOGRAPHIC ANCHOR BREAKDOWN</span>
+                  <span class="dissector-hint">Mental anchors mapped into high-entropy tokens</span>
+                </div>
+                <div class="token-chips-flow" id="token-chips-flow">
+                  <!-- Dynamically rendered tokens -->
+                </div>
+                <div class="anatomy-summary-text" id="anatomy-summary-text">
+                  Synthesized from 4 cognitive anchors with deterministic salt. Zero dictionary words exposed.
+                </div>
+              </div>
+
+              <!-- Defense Verification Matrix (Reference UI Challenges Style) -->
+              <div class="defense-matrix-wrap">
+                <div class="defense-row">
+                  <div class="defense-row-left">
+                    <div class="defense-icon-badge defense-icon-shield">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <polyline points="9 12 11 14 15 10"></polyline>
                       </svg>
                     </div>
-                    <div class="archetype-title-group">
-                      <h3 class="active-archetype-name" id="archetype-name">Fortress Tactical</h3>
-                      <span class="active-archetype-desc" id="archetype-desc">Multi-set leet token with cryptographic seed salt</span>
+                    <div class="defense-text-group">
+                      <span class="defense-name">Dictionary Attack Immunity</span>
+                      <span class="defense-desc">Zero dictionary words. Immune to rainbow tables &amp; wordlist attacks.</span>
                     </div>
                   </div>
-                  <div class="archetype-meta-right">
-                    <span class="status-pill-badge pill-ongoing" id="archetype-category-badge">Fortress</span>
-                    <button type="button" class="copy-archetype-btn" id="btn-copy-archetype" title="Copy active archetype to clipboard">
-                      <svg class="copy-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  <span class="status-pill-badge pill-complete" id="matrix-status-dictionary">Shielded</span>
+                </div>
+
+                <div class="defense-row">
+                  <div class="defense-row-left">
+                    <div class="defense-icon-badge defense-icon-pool">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
                       </svg>
-                      <span id="copy-archetype-label">Copy</span>
-                    </button>
+                    </div>
+                    <div class="defense-text-group">
+                      <span class="defense-name">Character Pool Diversity</span>
+                      <span class="defense-desc">Uppercase, lowercase, numeric digits, and special symbols.</span>
+                    </div>
                   </div>
+                  <span class="status-pill-badge pill-ongoing" id="matrix-status-diversity">4 / 4 Pools</span>
                 </div>
 
-                <!-- Active Archetype Monospace Display (Masks with primary display) -->
-                <div class="password-monolith-box archetype-monolith-box">
-                  <span id="active-archetype-password" class="password-text-string">Cr1ms0n#Ar3s00@*8rv</span>
+                <div class="defense-row">
+                  <div class="defense-row-left">
+                    <div class="defense-icon-badge defense-icon-memory">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                      </svg>
+                    </div>
+                    <div class="defense-text-group">
+                      <span class="defense-name">Cognitive Reconstruction</span>
+                      <span class="defense-desc">Reconstructible anywhere from memory without cloud sync.</span>
+                    </div>
+                  </div>
+                  <span class="status-pill-badge pill-complete" id="matrix-status-recall">Optimal</span>
+                </div>
+              </div>
+
+              <!-- Interactive Cognitive Recall Drill -->
+              <div class="memory-drill-box">
+                <div class="drill-header-row">
+                  <div class="drill-title-wrap">
+                    <span class="drill-title">Cognitive Recall Drill</span>
+                    <span class="drill-desc">Test mental retention: practice typing your credential from memory</span>
+                  </div>
+                  <button type="button" class="btn-text-action" id="btn-drill-hint" title="Reveal the next anchor fragment as a memory clue">Hint</button>
                 </div>
 
-                <!-- Numbered Capsule Switcher Track: 8 interactive pips -->
-                <div class="archetype-pips-track" id="archetype-pips-track" role="tablist" aria-label="Archetype Quick Switcher">
-                  <button type="button" class="archetype-pip-btn active" data-pip-index="0" role="tab" aria-selected="true" title="1. Fortress Tactical">1</button>
-                  <button type="button" class="archetype-pip-btn" data-pip-index="1" role="tab" aria-selected="false" title="2. Memorable Passphrase">2</button>
-                  <button type="button" class="archetype-pip-btn" data-pip-index="2" role="tab" aria-selected="false" title="3. Developer CLI Token">3</button>
-                  <button type="button" class="archetype-pip-btn" data-pip-index="3" role="tab" aria-selected="false" title="4. Alphanumeric PIN">4</button>
-                  <button type="button" class="archetype-pip-btn" data-pip-index="4" role="tab" aria-selected="false" title="5. Ultra High-Entropy">5</button>
-                  <button type="button" class="archetype-pip-btn" data-pip-index="5" role="tab" aria-selected="false" title="6. Compact Mobile">6</button>
-                  <button type="button" class="archetype-pip-btn" data-pip-index="6" role="tab" aria-selected="false" title="7. Enterprise Compliant">7</button>
-                  <button type="button" class="archetype-pip-btn" data-pip-index="7" role="tab" aria-selected="false" title="8. Kebab Identifier">8</button>
+                <div class="drill-input-group">
+                  <input type="password" class="drill-input" id="drill-input" placeholder="Type token from memory..." autocomplete="off" spellcheck="false" aria-label="Practice typing credential">
+                  <button type="button" class="card-action-btn drill-eye-btn" id="btn-drill-toggle-eye" title="Show / Hide input text">
+                    <svg id="icon-drill-eye-open" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <svg id="icon-drill-eye-closed" style="display: none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  </button>
+                  <button type="button" class="drill-verify-btn" id="btn-drill-verify">Verify Recall</button>
+                </div>
+
+                <div class="drill-feedback-bar" id="drill-feedback">
+                  <span class="drill-status-text" id="drill-status-text">Practice mental recall above without looking at your password.</span>
                 </div>
               </div>
             </article>

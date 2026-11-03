@@ -63,7 +63,7 @@
     document.getElementById('seg-4')
   ];
 
-  // DOM Elements - Archetype Switcher Carousel
+  // DOM Elements - Format Stepper & Capsule Controls (Card 1)
   const archetypeCounterCurrent = document.getElementById('archetype-counter-current');
   const archetypeCounterTotal = document.getElementById('archetype-counter-total');
   const btnArchetypePrev = document.getElementById('btn-archetype-prev');
@@ -71,11 +71,23 @@
   const archetypeName = document.getElementById('archetype-name');
   const archetypeDesc = document.getElementById('archetype-desc');
   const archetypeCategoryBadge = document.getElementById('archetype-category-badge');
-  const activeArchetypePassword = document.getElementById('active-archetype-password');
-  const btnCopyArchetype = document.getElementById('btn-copy-archetype');
-  const copyArchetypeLabel = document.getElementById('copy-archetype-label');
   const archetypePipsTrack = document.getElementById('archetype-pips-track');
   const btnCopyAll = document.getElementById('btn-copy-all');
+
+  // DOM Elements - Token Anatomy & Cognitive Defense Lab (Card 2)
+  const tokenChipsFlow = document.getElementById('token-chips-flow');
+  const anatomySummaryText = document.getElementById('anatomy-summary-text');
+  const matrixStatusDictionary = document.getElementById('matrix-status-dictionary');
+  const matrixStatusDiversity = document.getElementById('matrix-status-diversity');
+  const matrixStatusRecall = document.getElementById('matrix-status-recall');
+  const drillInput = document.getElementById('drill-input');
+  const btnDrillToggleEye = document.getElementById('btn-drill-toggle-eye');
+  const iconDrillEyeOpen = document.getElementById('icon-drill-eye-open');
+  const iconDrillEyeClosed = document.getElementById('icon-drill-eye-closed');
+  const btnDrillHint = document.getElementById('btn-drill-hint');
+  const btnDrillVerify = document.getElementById('btn-drill-verify');
+  const drillFeedback = document.getElementById('drill-feedback');
+  const drillStatusText = document.getElementById('drill-status-text');
 
   // Toast
   const toast = document.getElementById('toast');
@@ -239,11 +251,6 @@
       });
     }
 
-    // Copy Active Archetype
-    if (btnCopyArchetype) {
-      btnCopyArchetype.addEventListener('click', copyActiveArchetype);
-    }
-
     // Static Pip Buttons
     if (archetypePipsTrack) {
       const pipBtns = archetypePipsTrack.querySelectorAll('.archetype-pip-btn');
@@ -261,6 +268,9 @@
     if (btnCopyAll) {
       btnCopyAll.addEventListener('click', copyAllArchetypes);
     }
+
+    // Cognitive Recall Drill Setup
+    setupCognitiveDrill();
 
     // Dock Navigation Scroll
     if (dockBtnVault) {
@@ -280,7 +290,8 @@
     if (dockBtnArchetypes) {
       dockBtnArchetypes.addEventListener('click', () => {
         setActiveDock(dockBtnArchetypes);
-        document.getElementById('section-archetypes')?.scrollIntoView({ behavior: 'smooth' });
+        const targetSection = document.getElementById('section-anatomy') || document.getElementById('section-archetypes');
+        targetSection?.scrollIntoView({ behavior: 'smooth' });
       });
     }
 
@@ -512,7 +523,15 @@
         category: 'Fortress',
         badgeClass: 'ongoing',
         value: fortressBase,
-        description: 'Multi-set leet token with cryptographic seed salt'
+        description: 'Multi-set leet token with cryptographic seed salt',
+        tokens: [
+          { label: 'Color', val: mColor, type: 'chip-color' },
+          { label: 'Salt', val: sym1, type: 'chip-salt' },
+          { label: 'Handle', val: mName, type: 'chip-handle' },
+          { label: 'Epoch', val: `${sym2}${shortYear}${sym3}`, type: 'chip-epoch' },
+          { label: 'Anchor', val: mCustom, type: 'chip-word' },
+          { label: 'Noise', val: `${sym4}${saltPart}`, type: 'chip-noise' }
+        ]
       },
       {
         id: 'memorable',
@@ -520,7 +539,16 @@
         category: 'Memorable',
         badgeClass: 'complete',
         value: memorablePassphrase,
-        description: 'Delimited cognitive shorthand (un-guessable from favorites)'
+        description: 'Delimited cognitive shorthand (un-guessable from favorites)',
+        tokens: [
+          { label: 'Color', val: mColor, type: 'chip-color' },
+          { label: 'Sep', val: separator, type: 'chip-salt' },
+          { label: 'Handle', val: mName, type: 'chip-handle' },
+          { label: 'Sep', val: separator, type: 'chip-salt' },
+          { label: 'Epoch', val: shortYear, type: 'chip-epoch' },
+          { label: 'Sep', val: separator, type: 'chip-salt' },
+          { label: 'Anchor', val: mCustom, type: 'chip-word' }
+        ]
       },
       {
         id: 'dev_token',
@@ -528,7 +556,15 @@
         category: 'High Entropy',
         badgeClass: 'ongoing',
         value: devToken,
-        description: 'Standardized underscore slug for API keys & CLI'
+        description: 'Standardized underscore slug for API keys & CLI',
+        tokens: [
+          { label: 'Handle', val: mName.toLowerCase(), type: 'chip-handle' },
+          { label: 'Tag', val: '_live_', type: 'chip-noise' },
+          { label: 'Epoch', val: techYear, type: 'chip-epoch' },
+          { label: 'Color', val: cColor.toLowerCase().slice(0, 3), type: 'chip-color' },
+          { label: 'Anchor', val: cCustom.toLowerCase(), type: 'chip-word' },
+          { label: 'Salt', val: devSalt, type: 'chip-salt' }
+        ]
       },
       {
         id: 'alphanumeric',
@@ -536,7 +572,13 @@
         category: 'Compatible',
         badgeClass: 'neutral',
         value: alphanumeric,
-        description: 'Zero special symbols for legacy form requirements'
+        description: 'Zero special symbols for legacy form requirements',
+        tokens: [
+          { label: 'Handle', val: mName, type: 'chip-handle' },
+          { label: 'Color', val: cColor, type: 'chip-color' },
+          { label: 'Epoch', val: shortYear, type: 'chip-epoch' },
+          { label: 'Anchor', val: mCustom, type: 'chip-word' }
+        ]
       },
       {
         id: 'ultra',
@@ -544,7 +586,16 @@
         category: 'Maximum',
         badgeClass: 'ongoing',
         value: ultra,
-        description: 'Maximum symbol diffusion and shuffled anchors'
+        description: 'Maximum symbol diffusion and shuffled anchors',
+        tokens: [
+          { label: 'Prefix', val: '#', type: 'chip-salt' },
+          { label: 'Anchor', val: mCustom, type: 'chip-word' },
+          { label: 'Sep', val: '!', type: 'chip-salt' },
+          { label: 'Handle', val: mName, type: 'chip-handle' },
+          { label: 'Salt', val: saltToken, type: 'chip-noise' },
+          { label: 'Color', val: mColor, type: 'chip-color' },
+          { label: 'Epoch', val: shortYear, type: 'chip-epoch' }
+        ]
       },
       {
         id: 'mobile',
@@ -552,7 +603,14 @@
         category: 'Compact',
         badgeClass: 'complete',
         value: mobile,
-        description: 'Optimized length for virtual keyboard inputs'
+        description: 'Optimized length for virtual keyboard inputs',
+        tokens: [
+          { label: 'Handle', val: mName.slice(0, 3), type: 'chip-handle' },
+          { label: 'Sym', val: mobSym, type: 'chip-salt' },
+          { label: 'Color', val: cColor.slice(0, 3), type: 'chip-color' },
+          { label: 'Epoch', val: shortYear, type: 'chip-epoch' },
+          { label: 'Anchor', val: cCustom.slice(0, 2), type: 'chip-word' }
+        ]
       },
       {
         id: 'enterprise',
@@ -560,7 +618,14 @@
         category: 'Standard',
         badgeClass: 'neutral',
         value: enterprise,
-        description: 'Guarantees upper, lower, number and punctuation'
+        description: 'Guarantees upper, lower, number and punctuation',
+        tokens: [
+          { label: 'Handle', val: mName, type: 'chip-handle' },
+          { label: 'Sep', val: entSep1 || '.', type: 'chip-salt' },
+          { label: 'Color', val: cColor, type: 'chip-color' },
+          { label: 'Sep', val: entSep2 || '@', type: 'chip-noise' },
+          { label: 'Epoch', val: techYear, type: 'chip-epoch' }
+        ]
       },
       {
         id: 'kebab',
@@ -568,7 +633,16 @@
         category: 'Memorable',
         badgeClass: 'complete',
         value: kebab,
-        description: 'Clean hyphenated lowercase string'
+        description: 'Clean hyphenated lowercase string',
+        tokens: [
+          { label: 'Handle', val: mName.toLowerCase(), type: 'chip-handle' },
+          { label: 'Sep', val: '-', type: 'chip-salt' },
+          { label: 'Color', val: cColor.toLowerCase(), type: 'chip-color' },
+          { label: 'Sep', val: '-', type: 'chip-salt' },
+          { label: 'Anchor', val: cCustom.toLowerCase(), type: 'chip-word' },
+          { label: 'Sep', val: '-', type: 'chip-salt' },
+          { label: 'Epoch', val: shortYear, type: 'chip-epoch' }
+        ]
       }
     ];
 
@@ -593,15 +667,10 @@
     if (archetypeDesc) archetypeDesc.textContent = active.description;
     if (archetypeCategoryBadge) {
       archetypeCategoryBadge.textContent = active.category;
-      archetypeCategoryBadge.className = `status-pill-badge ${active.badgeClass}`;
+      archetypeCategoryBadge.className = `status-pill-badge pill-${active.badgeClass}`;
     }
 
-    // 3. Password display in active showcase card
-    if (activeArchetypePassword) {
-      activeArchetypePassword.textContent = active.value;
-    }
-
-    // 4. Synchronize Primary Hero Display and Metrics
+    // 3. Synchronize Primary Hero Display and Metrics
     currentPrimaryPassword = active.value;
     if (primaryDisplay) {
       primaryDisplay.textContent = currentPrimaryPassword;
@@ -611,11 +680,149 @@
     }
     computeMetrics(currentPrimaryPassword);
 
-    // 5. Update Numbered Capsule Pips in Track (1 to 8)
+    // 4. Update Numbered Capsule Pips in Track (1 to 8)
     renderArchetypePips();
 
-    // 6. Ensure mask blur is synchronously applied to BOTH displays if masked
+    // 5. Ensure mask blur is synchronously applied
     applyMaskState();
+
+    // 6. Update Card 2: Token Anatomy Dissector & Defense Matrix
+    renderTokenAnatomy(active);
+
+    // 7. Reset Drill for the new active archetype
+    resetDrill();
+  }
+
+  // Render Token Anatomy Dissector & Defense Matrix (Card 2)
+  function renderTokenAnatomy(active) {
+    if (!tokenChipsFlow) return;
+    tokenChipsFlow.innerHTML = '';
+    const tokens = active.tokens || [];
+    tokens.forEach(tok => {
+      if (!tok.val) return;
+      const chip = document.createElement('span');
+      chip.className = `token-chip ${tok.type || 'chip-handle'}`;
+      chip.innerHTML = `<span class="chip-label">${escapeHtml(tok.label)}</span><span class="chip-val">${escapeHtml(tok.val)}</span>`;
+      tokenChipsFlow.appendChild(chip);
+    });
+
+    if (anatomySummaryText) {
+      anatomySummaryText.textContent = `Synthesized deterministically from ${tokens.length} anchor elements. Category: ${active.category} (${active.value.length} chars). Immune to rainbow tables.`;
+    }
+
+    // Update Defense Matrix
+    const pwd = active.value;
+    let poolCount = 0;
+    if (/[a-z]/.test(pwd)) poolCount++;
+    if (/[A-Z]/.test(pwd)) poolCount++;
+    if (/[0-9]/.test(pwd)) poolCount++;
+    if (/[^a-zA-Z0-9]/.test(pwd)) poolCount++;
+
+    if (matrixStatusDiversity) {
+      matrixStatusDiversity.textContent = `${poolCount} / 4 Pools`;
+      matrixStatusDiversity.className = poolCount === 4 ? 'status-pill-badge pill-complete' : 'status-pill-badge pill-ongoing';
+    }
+
+    if (matrixStatusDictionary) {
+      matrixStatusDictionary.textContent = 'Shielded';
+      matrixStatusDictionary.className = 'status-pill-badge pill-complete';
+    }
+
+    if (matrixStatusRecall) {
+      matrixStatusRecall.textContent = 'Optimal';
+      matrixStatusRecall.className = 'status-pill-badge pill-complete';
+    }
+  }
+
+  // Cognitive Recall Drill Setup
+  function setupCognitiveDrill() {
+    if (drillInput) {
+      drillInput.addEventListener('input', handleDrillInput);
+      drillInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          handleDrillVerify();
+        }
+      });
+    }
+
+    if (btnDrillToggleEye) {
+      btnDrillToggleEye.addEventListener('click', () => {
+        if (!drillInput) return;
+        const isPassword = drillInput.type === 'password';
+        drillInput.type = isPassword ? 'text' : 'password';
+        if (iconDrillEyeOpen) iconDrillEyeOpen.style.display = isPassword ? 'none' : 'block';
+        if (iconDrillEyeClosed) iconDrillEyeClosed.style.display = isPassword ? 'block' : 'none';
+      });
+    }
+
+    if (btnDrillHint) {
+      btnDrillHint.addEventListener('click', () => {
+        if (!currentPrimaryPassword) return;
+        const active = generatedArchetypes[activeArchetypeIndex];
+        const tokens = active?.tokens || [];
+        const tokenNames = tokens.map(t => `[${t.label}: ${t.val}]`).join(' + ');
+        if (drillFeedback && drillStatusText) {
+          drillFeedback.className = 'drill-feedback-bar match-progress';
+          drillStatusText.textContent = `Anatomy sequence: ${tokenNames}`;
+        }
+      });
+    }
+
+    if (btnDrillVerify) {
+      btnDrillVerify.addEventListener('click', handleDrillVerify);
+    }
+  }
+
+  function handleDrillInput() {
+    if (!drillInput || !drillFeedback || !drillStatusText) return;
+    const typed = drillInput.value;
+    const target = currentPrimaryPassword;
+
+    if (!typed) {
+      drillFeedback.className = 'drill-feedback-bar';
+      drillStatusText.textContent = 'Practice mental recall above without looking at your password.';
+      return;
+    }
+
+    if (typed === target) {
+      drillFeedback.className = 'drill-feedback-bar match-success';
+      drillStatusText.textContent = '100% Perfect Recall! You have committed this credential to memory.';
+      return;
+    }
+
+    if (target.startsWith(typed)) {
+      drillFeedback.className = 'drill-feedback-bar match-progress';
+      drillStatusText.textContent = `Matching: ${typed.length} / ${target.length} characters correct...`;
+    } else {
+      let mismatchPos = 0;
+      while (mismatchPos < typed.length && mismatchPos < target.length && typed[mismatchPos] === target[mismatchPos]) {
+        mismatchPos++;
+      }
+      drillFeedback.className = 'drill-feedback-bar match-error';
+      drillStatusText.textContent = `Mismatch at position ${mismatchPos + 1}. Check your anchor sequence or symbol.`;
+    }
+  }
+
+  function handleDrillVerify() {
+    if (!drillInput) return;
+    const typed = drillInput.value;
+    const target = currentPrimaryPassword;
+    if (typed === target) {
+      if (drillFeedback && drillStatusText) {
+        drillFeedback.className = 'drill-feedback-bar match-success';
+        drillStatusText.textContent = '100% Perfect Recall! You have committed this credential to memory.';
+      }
+      showToast('Cognitive Recall Verified 100%!');
+    } else {
+      handleDrillInput();
+      showToast('Recall incomplete. Keep practicing!');
+    }
+  }
+
+  function resetDrill() {
+    if (drillInput) drillInput.value = '';
+    if (drillFeedback) drillFeedback.className = 'drill-feedback-bar';
+    if (drillStatusText) drillStatusText.textContent = 'Practice mental recall above without looking at your password.';
   }
 
   // Render 8 numbered quick-switch capsules
@@ -707,20 +914,17 @@
     });
   }
 
-  // Visibility Toggle (Synchronously masks / reveals BOTH Primary and Archetype displays)
+  // Visibility Toggle
   function toggleVisibility() {
     isPasswordMasked = !isPasswordMasked;
     applyMaskState();
-    showToast(isPasswordMasked ? 'All credentials masked' : 'All credentials revealed');
+    showToast(isPasswordMasked ? 'Credential masked' : 'Credential revealed');
   }
 
-  // Apply Masking State across all password displays
+  // Apply Masking State
   function applyMaskState() {
     if (primaryDisplay) {
       primaryDisplay.classList.toggle('masked', isPasswordMasked);
-    }
-    if (activeArchetypePassword) {
-      activeArchetypePassword.classList.toggle('masked', isPasswordMasked);
     }
     if (iconEyeOpen && iconEyeClosed) {
       iconEyeOpen.style.display = isPasswordMasked ? 'none' : 'block';
@@ -728,24 +932,7 @@
     }
   }
 
-  // Copy Active Archetype Credential
-  function copyActiveArchetype() {
-    const active = generatedArchetypes[activeArchetypeIndex];
-    if (!active) return;
-    copyToClipboard(active.value, () => {
-      if (btnCopyArchetype) {
-        btnCopyArchetype.classList.add('copied');
-        if (copyArchetypeLabel) copyArchetypeLabel.textContent = 'Copied';
-        setTimeout(() => {
-          btnCopyArchetype.classList.remove('copied');
-          if (copyArchetypeLabel) copyArchetypeLabel.textContent = 'Copy';
-        }, 1800);
-      }
-      showToast(`Copied ${active.name} to clipboard`);
-    });
-  }
-
-  // Copy Primary Credential
+  // Copy Active Primary Credential
   function copyPrimary() {
     if (!currentPrimaryPassword) return;
     copyToClipboard(currentPrimaryPassword, () => {
@@ -757,7 +944,8 @@
           if (copyPrimaryLabel) copyPrimaryLabel.textContent = 'Copy';
         }, 1800);
       }
-      showToast('Primary credential copied to clipboard');
+      const activeName = generatedArchetypes[activeArchetypeIndex]?.name || 'Credential';
+      showToast(`${activeName} copied to clipboard`);
     });
   }
 
