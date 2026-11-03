@@ -12,22 +12,18 @@
    ========================================================================== */
 
 :root, [data-theme="dark"] {
-  --bg-viewport: #0c1219;
-  --bg-room-wall: radial-gradient(ellipse at 75% 25%, #1c2e3d 0%, #101c27 50%, #070d13 100%);
-  --bg-room-spotlight: radial-gradient(ellipse at 78% 18%, rgba(255, 235, 210, 0.08) 0%, transparent 65%);
-  --bg-room-cabinet: linear-gradient(to top, rgba(14, 18, 24, 0.98), rgba(12, 16, 22, 0.85) 75%, transparent 100%);
-  --bg-room-floor: linear-gradient(to bottom, #4a3424 0%, #302015 50%, #190f09 100%);
-
-  /* Frosted Glass Console Tokens */
-  --glass-surface: linear-gradient(135deg, rgba(32, 45, 60, 0.65) 0%, rgba(18, 26, 36, 0.72) 100%);
-  --glass-surface-border: rgba(255, 255, 255, 0.15);
+  --bg-viewport: #07090c;
+  
+  /* Frosted Smoked Glass Tokens (Dark Mode) */
+  --glass-surface: linear-gradient(135deg, rgba(20, 26, 36, 0.72) 0%, rgba(11, 15, 22, 0.8) 100%);
+  --glass-surface-border: rgba(255, 255, 255, 0.13);
   --glass-subcard: rgba(255, 255, 255, 0.045);
   --glass-subcard-border: rgba(255, 255, 255, 0.08);
   --glass-subcard-hover: rgba(255, 255, 255, 0.075);
   
   --glass-input-bg: rgba(255, 255, 255, 0.05);
   --glass-input-border: rgba(255, 255, 255, 0.10);
-  --glass-input-focus: rgba(255, 255, 255, 0.18);
+  --glass-input-focus: rgba(255, 255, 255, 0.22);
 
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
@@ -38,51 +34,50 @@
   --btn-primary-text: #090e15;
   --btn-primary-hover: #e2e8f0;
 
-  /* Reference-inspired soft muted status pills (Strictly Non-Neon) */
+  /* Image 2 Inspired Palette: Electric Acid Lime & Soft Muted Status Pills */
+  --accent-lime: #00e676;
+  --accent-lime-glow: rgba(0, 230, 118, 0.25);
   --pill-ongoing-bg: rgba(202, 138, 4, 0.22);
   --pill-ongoing-text: #fef08a;
-  --pill-complete-bg: rgba(34, 197, 94, 0.22);
-  --pill-complete-text: #86efac;
+  --pill-complete-bg: rgba(0, 230, 118, 0.2);
+  --pill-complete-text: #69f0ae;
   --pill-neutral-bg: rgba(148, 163, 184, 0.14);
   --pill-neutral-text: #cbd5e1;
 
-  --status-emerald: #34d399;
+  --status-emerald: #00e676;
   --status-amber: #fbbf24;
-  --status-cobalt: #60a5fa;
+  --status-cobalt: #38bdf8;
 
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
 
-  --shadow-console: 0 35px 80px -20px rgba(0, 0, 0, 0.7), 0 10px 30px -10px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.22);
-  --shadow-dock: 0 25px 50px -10px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  --shadow-console: 0 40px 90px -20px rgba(0, 0, 0, 0.75), 0 10px 30px -10px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  --shadow-dock: 0 25px 50px -10px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.18);
   --shadow-subcard: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 [data-theme="light"] {
-  --bg-viewport: #e2e8f0;
-  --bg-room-wall: radial-gradient(ellipse at 75% 25%, #f1f5f9 0%, #e2e8f0 55%, #cbd5e1 100%);
-  --bg-room-spotlight: radial-gradient(ellipse at 78% 18%, rgba(255, 255, 255, 0.5) 0%, transparent 65%);
-  --bg-room-cabinet: linear-gradient(to top, rgba(241, 245, 249, 0.95), rgba(226, 232, 240, 0.8) 75%, transparent 100%);
-  --bg-room-floor: linear-gradient(to bottom, #d4bda8 0%, #ba9d84 50%, #9e7f65 100%);
+  --bg-viewport: #1872d8;
 
-  --glass-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(248, 250, 252, 0.85) 100%);
-  --glass-surface-border: rgba(255, 255, 255, 0.9);
+  /* Frosted Bright Glass Tokens (Light Mode - Sky Blue Theme) */
+  --glass-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(246, 250, 254, 0.88) 100%);
+  --glass-surface-border: rgba(255, 255, 255, 0.92);
   --glass-subcard: rgba(255, 255, 255, 0.65);
-  --glass-subcard-border: rgba(226, 232, 240, 0.85);
+  --glass-subcard-border: rgba(215, 230, 245, 0.85);
   --glass-subcard-hover: rgba(255, 255, 255, 0.85);
 
-  --glass-input-bg: rgba(255, 255, 255, 0.92);
-  --glass-input-border: #cbd5e1;
-  --glass-input-focus: #94a3b8;
+  --glass-input-bg: rgba(255, 255, 255, 0.94);
+  --glass-input-border: #bfdbfe;
+  --glass-input-focus: #3b82f6;
 
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --text-subtle: #94a3b8;
+  --text-primary: #0a192f;
+  --text-secondary: #334e68;
+  --text-muted: #627d98;
+  --text-subtle: #829ab1;
 
-  --btn-primary-bg: #0f172a;
+  --btn-primary-bg: #0a192f;
   --btn-primary-text: #ffffff;
-  --btn-primary-hover: #1e293b;
+  --btn-primary-hover: #1b365d;
 
   --pill-ongoing-bg: #fef9c3;
   --pill-ongoing-text: #854d0e;
@@ -95,9 +90,9 @@
   --status-amber: #d97706;
   --status-cobalt: #2563eb;
 
-  --shadow-console: 0 30px 70px -15px rgba(15, 23, 42, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-  --shadow-dock: 0 20px 40px rgba(15, 23, 42, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9);
-  --shadow-subcard: 0 4px 15px rgba(15, 23, 42, 0.04);
+  --shadow-console: 0 35px 85px -15px rgba(15, 76, 145, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+  --shadow-dock: 0 20px 45px rgba(15, 76, 145, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+  --shadow-subcard: 0 4px 16px rgba(15, 76, 145, 0.05);
 }
 
 *, *::before, *::after {
@@ -125,7 +120,7 @@ body {
 }
 
 /* ==========================================================================
-   Atmospheric Studio Room Backdrop
+   Dynamic Atmospheric Backdrop: Light Sky vs Dark Image 2 Color Mesh
    ========================================================================== */
 .ambient-backdrop {
   position: fixed;
@@ -137,53 +132,111 @@ body {
   overflow: hidden;
 }
 
-.room-wall {
+/* Dark Mode: Image 2 Color Palette Mesh Aura */
+.dark-mesh-backdrop {
   position: absolute;
   inset: 0;
-  background: var(--bg-room-wall);
+  background: #07090c;
+  opacity: 1;
+  transition: opacity 0.4s ease;
 }
 
-.room-spotlight {
+[data-theme="light"] .dark-mesh-backdrop {
+  opacity: 0;
+  display: none;
+}
+
+.mesh-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.mesh-lime {
+  top: -80px;
+  right: 12%;
+  width: 580px;
+  height: 580px;
+  background: radial-gradient(circle, #00e676 0%, #10f543 35%, transparent 70%);
+  filter: blur(130px);
+  opacity: 0.24;
+}
+
+.mesh-cyan {
+  bottom: 8%;
+  left: 6%;
+  width: 620px;
+  height: 620px;
+  background: radial-gradient(circle, #0ea5e9 0%, #2563eb 45%, transparent 70%);
+  filter: blur(150px);
+  opacity: 0.20;
+}
+
+.mesh-deep {
+  top: 35%;
+  left: 30%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, #059669 0%, #064e3b 50%, transparent 70%);
+  filter: blur(160px);
+  opacity: 0.14;
+}
+
+.dark-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.6;
+}
+
+/* Light Mode: Vivid Blue Sky with Sun & Cloud Waves (Image 1) */
+.light-sky-backdrop {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  display: none;
+  transition: opacity 0.4s ease;
+}
+
+[data-theme="light"] .light-sky-backdrop {
+  opacity: 1;
+  display: block;
+}
+
+.sky-gradient-base {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1b7ee5 0%, #2993fb 35%, #59affd 70%, #9dd0fe 100%);
+}
+
+.sky-sun-beam {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 80vw;
-  height: 70vh;
-  background: var(--bg-room-spotlight);
+  left: 0;
+  width: 65vw;
+  height: 65vh;
+  background: radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.35) 0%, transparent 65%);
 }
 
-.room-plant {
+.sky-sun-svg {
   position: absolute;
-  left: -20px;
-  bottom: 0;
-  width: 480px;
-  height: 80vh;
+  top: 2.25rem;
+  right: 4.5rem;
+  width: 140px;
+  height: 140px;
   z-index: 1;
-  opacity: 0.85;
-  filter: blur(1.5px);
-  transition: opacity 0.3s ease;
+  filter: drop-shadow(0 12px 28px rgba(245, 158, 11, 0.35));
 }
 
-.room-cabinet {
+.sky-clouds-svg {
   position: absolute;
-  left: 0;
-  right: 0;
   bottom: 0;
-  height: 280px;
-  background: var(--bg-room-cabinet);
-  z-index: 0;
-}
-
-.room-floor {
-  position: absolute;
   left: 0;
-  right: 0;
-  bottom: 0;
-  height: 150px;
-  background: var(--bg-room-floor);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  opacity: 0.75;
-  z-index: 0;
+  width: 100vw;
+  height: 380px;
+  z-index: 1;
 }
 
 /* ==========================================================================

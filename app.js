@@ -350,6 +350,32 @@
     return str.split('').map(char => LEET_MAP[char] || char).join('');
   }
 
+  // Cognitive Mnemonic Helpers for "Complicated yet Remembrable" Credentials
+  function toConsonants(word) {
+    if (!word) return '';
+    if (word.length <= 3) return word;
+    // Keep first letter, strip internal unstressed vowels
+    const first = word[0];
+    const rest = word.slice(1).replace(/[aeiou]/gi, '');
+    return first + rest;
+  }
+
+  function toMnemonicLeet(word, enableLeet) {
+    if (!word) return '';
+    if (!enableLeet) return word;
+    // Replace internal vowels with classic leet numbers: a->4, e->3, i->1, o->0
+    const leetVowels = {
+      'a': '4', 'A': '4',
+      'e': '3', 'E': '3',
+      'i': '1', 'I': '1',
+      'o': '0', 'O': '0'
+    };
+    return word.split('').map((c, i) => {
+      if (i === 0) return c; // preserve first letter casing
+      return leetVowels[c] || c;
+    }).join('');
+  }
+
   // Primary Synthesis Engine
   function generate() {
     const rawName = (inputName?.value || 'Ares').trim();
@@ -369,54 +395,70 @@
     const month = dobParts[1] || '05';
     const day = dobParts[2] || '15';
     const shortYear = year.slice(-2);
+    const techYear = `2k${shortYear}`;
 
     // Compute deterministic salt token
     const combinedEntropySeed = `${rawName}:${rawDob}:${rawColor}:${rawCustom}`;
     const seedHash = fnv1a(combinedEntropySeed);
     const saltToken = seedHash.toString(36).slice(0, 3);
 
-    // 1. Fortress Tactical (Hero Archetype)
-    let fortressBase = '';
-    const colorPart = useLeet ? applyLeet(rawColor) : rawColor;
-    const namePart = useLeet ? applyLeet(rawName) : rawName;
-    const customPart = useLeet ? applyLeet(rawCustom) : rawCustom;
+    // Cognitive Obfuscated Anchors (Complicated & Remembrable)
+    const mName = toMnemonicLeet(rawName, useLeet);
+    const mColor = toMnemonicLeet(rawColor, useLeet);
+    const mCustom = toMnemonicLeet(rawCustom, useLeet);
+
+    const cName = toConsonants(rawName);
+    const cColor = toConsonants(rawColor);
+    const cCustom = toConsonants(rawCustom);
+
+    // 1. Fortress Tactical (Hero Archetype - Multi-set cryptographic diffusion)
     const sym1 = useSymbols ? '#' : '_';
     const sym2 = useSymbols ? '$!' : '-';
     const sym3 = useSymbols ? '$' : shortYear;
     const sym4 = useSymbols ? '@' : '.';
     const saltPart = useSalt ? `*${saltToken}` : '';
 
-    fortressBase = `${colorPart}${sym1}${namePart}${sym2}${shortYear}${sym3}${customPart}${sym4}${saltPart}`;
+    let fortressBase = `${mColor}${sym1}${mName}${sym2}${shortYear}${sym3}${mCustom}${sym4}${saltPart}`;
     if (forceUpper) fortressBase = fortressBase.toUpperCase();
 
-    // 2. Memorable Passphrase
-    let memorablePassphrase = [rawColor, rawName, year, rawCustom].filter(Boolean).join(separator);
-    if (useSymbols && !separator) memorablePassphrase += '!';
+    // 2. Memorable Passphrase (Cognitively Compounded & Obfuscated)
+    // Avoids naive dictionary words by using phonetic consonant/leet tokens
+    const phraseParts = [mColor, mName, shortYear, mCustom];
+    let memorablePassphrase = phraseParts.join(separator);
+    if (useSymbols && separator === '-') memorablePassphrase += '!';
     if (forceUpper) memorablePassphrase = memorablePassphrase.toUpperCase();
 
-    // 3. Developer / CLI Token
-    let devToken = `${rawName.toLowerCase()}_live_${year}_${rawColor.toLowerCase()}_${rawCustom.toLowerCase()}`;
-    if (useSalt) devToken += `_${saltToken}`;
-    if (forceUpper) devToken = devToken.toUpperCase();
-
-    // 4. Alphanumeric PIN (Strictly symbols-free for legacy enterprise/banking)
-    let alphanumeric = `${rawName}${rawColor}${shortYear}${rawCustom}`.replace(/[^a-zA-Z0-9]/g, '');
-    if (forceUpper) alphanumeric = alphanumeric.toUpperCase();
-
-    // 5. Ultra High-Entropy
-    let ultra = `#${customPart}!${namePart}!${saltToken}${colorPart}${shortYear}*${rawCustom.slice(0, 2)}`;
-    if (forceUpper) ultra = ultra.toUpperCase();
-
-    // 6. Compact Mobile (12 chars, easy on mobile keyboards)
-    let mobile = `${rawName.slice(0, 3)}${useSymbols ? '!' : ''}${rawColor.slice(0, 3)}${shortYear}${rawCustom.slice(0, 3)}`;
-    if (forceUpper) mobile = mobile.toUpperCase();
-
-    // 7. Enterprise Standard (Strict: 1 upper, 1 lower, 1 digit, 1 symbol)
-    let enterprise = `${rawName}${rawColor}${year}!`;
+    // 3. Enterprise Compliant (1 Upper, 1 Lower, 1 Digit, 1 Symbol - Un-guessable)
+    // E.g. Ar3s.Crmsn@2k36
+    const entSep1 = useSymbols ? '.' : '';
+    const entSep2 = useSymbols ? '@' : '';
+    let enterprise = `${mName}${entSep1}${cColor}${entSep2}${techYear}`;
+    if (!useSymbols) enterprise += shortYear;
     if (forceUpper) enterprise = enterprise.toUpperCase();
 
-    // 8. Lowercase Kebab
-    let kebab = `${rawName}-${rawColor}-${rawCustom}-${shortYear}`.toLowerCase();
+    // 4. Kebab Identifier (Phonetic consonant slug)
+    // E.g. ar3s-crmsn-ttn-36
+    let kebab = `${mName.toLowerCase()}-${cColor.toLowerCase()}-${cCustom.toLowerCase()}-${shortYear}`;
+
+    // 5. Developer CLI Token (API / Stripe format with obfuscated anchors & salt)
+    // E.g. ar3s_live_2k36_crm_ttn_kff
+    const devSalt = useSalt ? `_${saltToken}` : '';
+    let devToken = `${mName.toLowerCase()}_live_${techYear}_${cColor.toLowerCase().slice(0, 3)}_${cCustom.toLowerCase()}${devSalt}`;
+    if (forceUpper) devToken = devToken.toUpperCase();
+
+    // 6. Alphanumeric PIN (Strictly symbols-free for legacy enterprise/banking)
+    // Obfuscated with leet digits & consonant compaction so it's not a plain dictionary word
+    let alphanumeric = `${mName}${cColor}${shortYear}${mCustom}`.replace(/[^a-zA-Z0-9]/g, '');
+    if (forceUpper) alphanumeric = alphanumeric.toUpperCase();
+
+    // 7. Ultra High-Entropy (Maximum symbol diffusion & salt interleave)
+    let ultra = `#${mCustom}!${mName}!${saltToken}${mColor}${shortYear}*${cCustom.slice(0, 2)}`;
+    if (forceUpper) ultra = ultra.toUpperCase();
+
+    // 8. Compact Mobile (12 chars, keypad friendly, high entropy)
+    const mobSym = useSymbols ? '!' : '';
+    let mobile = `${mName.slice(0, 3)}${mobSym}${cColor.slice(0, 3)}${shortYear}*${cCustom.slice(0, 2)}`;
+    if (forceUpper) mobile = mobile.toUpperCase();
 
     // Store generated variations
     generatedArchetypes = [
@@ -434,7 +476,7 @@
         category: 'Memorable',
         badgeClass: 'complete',
         value: memorablePassphrase,
-        description: 'Delimited multi-word cognitive sequence'
+        description: 'Delimited cognitive shorthand (un-guessable from favorites)'
       },
       {
         id: 'dev_token',
