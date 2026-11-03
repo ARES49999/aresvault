@@ -153,7 +153,7 @@ body {
 }
 
 .day-sky-base {
-  background: linear-gradient(175deg, #1565c0 0%, #1e88e5 28%, #3ba2f8 58%, #7ec4fb 85%, #bae6fd 100%);
+  background: linear-gradient(175deg, #0284c7 0%, #0ea5e9 25%, #38bdf8 55%, #7dd3fc 82%, #bae6fd 100%);
 }
 
 .night-sky-base {
@@ -252,27 +252,31 @@ body {
 .twinkle-c { animation: starPulseC 3.0s ease-in-out infinite; }
 .twinkle-d { animation: starPulseD 5.2s ease-in-out infinite; }
 
-@keyframes sparkleGlowA {
-  0%, 100% { opacity: 0.35; transform: scale(0.85) rotate(0deg); }
-  50% { opacity: 1; transform: scale(1.25) rotate(15deg); }
-}
-@keyframes sparkleGlowB {
-  0%, 100% { opacity: 0.9; transform: scale(1.2) rotate(10deg); }
-  50% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
-}
-@keyframes sparkleGlowC {
-  0%, 100% { opacity: 0.4; transform: scale(0.9) rotate(-10deg); }
-  50% { opacity: 1; transform: scale(1.3) rotate(10deg); }
-}
-@keyframes sparkleGlowD {
-  0%, 100% { opacity: 0.25; transform: scale(0.75) rotate(5deg); }
-  50% { opacity: 0.95; transform: scale(1.15) rotate(-15deg); }
+/* Pure Dot-Like Starfield Styling */
+.star-dot {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-.sparkle-a { transform-box: fill-box; transform-origin: center; animation: sparkleGlowA 4.2s ease-in-out infinite; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 10px rgba(147, 197, 253, 0.7)); }
-.sparkle-b { transform-box: fill-box; transform-origin: center; animation: sparkleGlowB 3.8s ease-in-out infinite; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 10px rgba(147, 197, 253, 0.7)); }
-.sparkle-c { transform-box: fill-box; transform-origin: center; animation: sparkleGlowC 4.8s ease-in-out infinite; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 10px rgba(147, 197, 253, 0.7)); }
-.sparkle-d { transform-box: fill-box; transform-origin: center; animation: sparkleGlowD 3.4s ease-in-out infinite; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 10px rgba(147, 197, 253, 0.7)); }
+.star-dot.twinkle-a {
+  animation: starPulseA 3.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+}
+
+.star-dot.twinkle-b {
+  animation: starPulseB 4.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 2px rgba(186, 230, 253, 0.8));
+}
+
+.star-dot.twinkle-c {
+  animation: starPulseC 3.0s ease-in-out infinite;
+  filter: drop-shadow(0 0 2px rgba(254, 240, 138, 0.8));
+}
+
+.star-dot.twinkle-d {
+  animation: starPulseD 5.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+}
 
 /* ==========================================================================
    Master Viewport & Layout Architecture
@@ -731,38 +735,88 @@ body {
   background: var(--glass-subcard);
 }
 
-.archetypes-list {
+/* Single-Item Focused Archetype Carousel Controls */
+.archetype-header-controls {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 0.65rem;
 }
 
-/* Challenges Row Pattern */
-.archetype-item-row {
+.archetype-counter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: var(--glass-input-bg);
+  border: 1px solid var(--glass-input-border);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+.counter-sep {
+  color: var(--text-muted);
+  font-weight: 400;
+  margin: 0 0.1rem;
+}
+
+.archetype-nav-arrows {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.archetype-nav-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-input-bg);
+  border: 1px solid var(--glass-input-border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.archetype-nav-btn:hover {
+  background: var(--glass-subcard-hover);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.archetype-nav-btn:active {
+  transform: translateY(1px);
+}
+
+/* Single Active Archetype Showcase Card */
+.active-archetype-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.35rem 1.5rem;
+  border-radius: 18px;
+  background: var(--glass-input-bg);
+  border: 1px solid var(--glass-input-border);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.05);
+  transition: all 0.25s ease;
+}
+
+.archetype-card-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.95rem 1.15rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: pointer;
+  flex-wrap: wrap;
 }
 
-.archetype-item-row:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.12);
-  transform: translateX(2px);
-}
-
-.archetype-item-row.selected {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.row-left-content {
+.archetype-meta-main {
   display: flex;
   align-items: center;
   gap: 0.85rem;
@@ -770,57 +824,109 @@ body {
   flex: 1;
 }
 
-.row-circle-indicator {
-  width: 22px;
-  height: 22px;
+.archetype-indicator-pip {
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.25);
+  background: rgba(16, 185, 129, 0.15);
+  border: 1.5px solid rgba(16, 185, 129, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: all 0.2s ease;
 }
 
-.archetype-item-row:hover .row-circle-indicator {
-  border-color: var(--text-primary);
-}
-
-.row-circle-indicator.completed {
-  border-color: #10b981;
-  background: rgba(16, 185, 129, 0.2);
-}
-
-.row-text-group {
+.archetype-title-group {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
   min-width: 0;
 }
 
-.row-name {
-  font-size: 0.9rem;
+.active-archetype-name {
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--text-primary);
+  margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.row-preview-string {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.active-archetype-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.35;
 }
 
-.row-right-actions {
+.archetype-meta-right {
   display: flex;
   align-items: center;
   gap: 0.65rem;
   flex-shrink: 0;
+}
+
+.archetype-monolith-box {
+  margin: 0;
+  padding: 1.15rem 1.35rem;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 14px;
+  border: 1px solid var(--glass-subcard-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  text-align: center;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] .archetype-monolith-box {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(200, 225, 250, 0.9);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Numbered Capsule Switcher Track: [1] [2] [3] [4] [5] [6] [7] [8] */
+.archetype-pips-track {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.45rem;
+  padding-top: 0.2rem;
+}
+
+.archetype-pip-btn {
+  padding: 0.45rem 0.2rem;
+  border-radius: 10px;
+  border: 1px solid var(--glass-input-border);
+  background: var(--glass-input-bg);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.archetype-pip-btn:hover {
+  background: var(--glass-subcard-hover);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.archetype-pip-btn.active {
+  background: rgba(14, 165, 233, 0.22);
+  border-color: rgba(14, 165, 233, 0.65);
+  color: #38bdf8;
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.25);
+}
+
+[data-theme="light"] .archetype-pip-btn.active {
+  background: rgba(21, 101, 192, 0.14);
+  border-color: #1e88e5;
+  color: #1565c0;
+  box-shadow: 0 0 10px rgba(30, 136, 229, 0.2);
 }
 
 /* Reference-Style Soft Non-Neon Status Pills */

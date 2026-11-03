@@ -63,11 +63,18 @@
     document.getElementById('seg-4')
   ];
 
-  // DOM Elements - Overview Metrics
-  const overviewEntropyRating = document.getElementById('overview-entropy-rating');
-  const overviewEntropyDesc = document.getElementById('overview-entropy-desc');
-  const overviewCrackTime = document.getElementById('overview-crack-time');
-  const variationsList = document.getElementById('variations-list');
+  // DOM Elements - Archetype Switcher Carousel
+  const archetypeCounterCurrent = document.getElementById('archetype-counter-current');
+  const archetypeCounterTotal = document.getElementById('archetype-counter-total');
+  const btnArchetypePrev = document.getElementById('btn-archetype-prev');
+  const btnArchetypeNext = document.getElementById('btn-archetype-next');
+  const archetypeName = document.getElementById('archetype-name');
+  const archetypeDesc = document.getElementById('archetype-desc');
+  const archetypeCategoryBadge = document.getElementById('archetype-category-badge');
+  const activeArchetypePassword = document.getElementById('active-archetype-password');
+  const btnCopyArchetype = document.getElementById('btn-copy-archetype');
+  const copyArchetypeLabel = document.getElementById('copy-archetype-label');
+  const archetypePipsTrack = document.getElementById('archetype-pips-track');
   const btnCopyAll = document.getElementById('btn-copy-all');
 
   // Toast
@@ -213,6 +220,28 @@
     // Copy Primary
     if (btnCopyPrimary) {
       btnCopyPrimary.addEventListener('click', copyPrimary);
+    }
+
+    // Prev / Next Archetype Navigation
+    if (btnArchetypePrev) {
+      btnArchetypePrev.addEventListener('click', () => {
+        if (!generatedArchetypes.length) return;
+        activeArchetypeIndex = (activeArchetypeIndex - 1 + generatedArchetypes.length) % generatedArchetypes.length;
+        renderActiveArchetype();
+      });
+    }
+
+    if (btnArchetypeNext) {
+      btnArchetypeNext.addEventListener('click', () => {
+        if (!generatedArchetypes.length) return;
+        activeArchetypeIndex = (activeArchetypeIndex + 1) % generatedArchetypes.length;
+        renderActiveArchetype();
+      });
+    }
+
+    // Copy Active Archetype
+    if (btnCopyArchetype) {
+      btnCopyArchetype.addEventListener('click', copyActiveArchetype);
     }
 
     // Copy All
@@ -530,102 +559,70 @@
       }
     ];
 
-    // Update active primary password
-    const active = generatedArchetypes[activeArchetypeIndex] || generatedArchetypes[0];
-    currentPrimaryPassword = active.value;
+    // Render Single Active Archetype Showcase & Synchronize Hero
+    renderActiveArchetype();
+  }
 
+  // Render Single Active Archetype (Focused Switcher Deck)
+  function renderActiveArchetype() {
+    if (!generatedArchetypes.length) return;
+    if (activeArchetypeIndex < 0) activeArchetypeIndex = 0;
+    if (activeArchetypeIndex >= generatedArchetypes.length) activeArchetypeIndex = 0;
+
+    const active = generatedArchetypes[activeArchetypeIndex];
+
+    // 1. Counter "1 / 8"
+    if (archetypeCounterCurrent) archetypeCounterCurrent.textContent = activeArchetypeIndex + 1;
+    if (archetypeCounterTotal) archetypeCounterTotal.textContent = generatedArchetypes.length;
+
+    // 2. Name & Description & Category Badge
+    if (archetypeName) archetypeName.textContent = active.name;
+    if (archetypeDesc) archetypeDesc.textContent = active.description;
+    if (archetypeCategoryBadge) {
+      archetypeCategoryBadge.textContent = active.category;
+      archetypeCategoryBadge.className = `status-pill-badge ${active.badgeClass}`;
+    }
+
+    // 3. Password display in active showcase card
+    if (activeArchetypePassword) {
+      activeArchetypePassword.textContent = active.value;
+    }
+
+    // 4. Synchronize Primary Hero Display and Metrics
+    currentPrimaryPassword = active.value;
     if (primaryDisplay) {
       primaryDisplay.textContent = currentPrimaryPassword;
     }
-
     if (activeCredentialBadge) {
       activeCredentialBadge.textContent = active.name;
     }
-
-    // Compute metrics
     computeMetrics(currentPrimaryPassword);
 
-    // Render Archetype list rows
-    renderArchetypesList();
+    // 5. Update Numbered Capsule Pips in Track (1 to 8)
+    renderArchetypePips();
+
+    // 6. Ensure mask blur is synchronously applied to BOTH displays if masked
+    applyMaskState();
   }
 
-  // Render Synthesized Archetypes Table (Matching "Challenges" in Reference)
-  function renderArchetypesList() {
-    if (!variationsList) return;
-    variationsList.innerHTML = '';
-
+  // Render 8 numbered quick-switch capsules
+  function renderArchetypePips() {
+    if (!archetypePipsTrack) return;
+    archetypePipsTrack.innerHTML = '';
     generatedArchetypes.forEach((item, index) => {
-      const isSelected = index === activeArchetypeIndex;
-      const row = document.createElement('div');
-      row.className = `archetype-item-row ${isSelected ? 'selected' : ''}`;
-      row.setAttribute('data-index', index);
-
-      row.innerHTML = `
-        <div class="row-left-content">
-          <div class="row-circle-indicator ${isSelected ? 'completed' : ''}">
-            ${isSelected ? `
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            ` : ''}
-          </div>
-          <div class="row-text-group">
-            <span class="row-name">${escapeHtml(item.name)}</span>
-            <span class="row-preview-string">${escapeHtml(item.value)}</span>
-          </div>
-        </div>
-
-        <div class="row-right-actions">
-          <span class="status-pill-badge ${item.badgeClass}">${escapeHtml(item.category)}</span>
-          <button type="button" class="row-copy-icon-btn" data-copy-index="${index}" title="Copy to clipboard">
-            <svg class="copy-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-          </button>
-        </div>
-      `;
-
-      // Clicking row inspects & sets as active primary credential
-      row.addEventListener('click', (e) => {
-        if (e.target.closest('.row-copy-icon-btn')) return;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `archetype-pip-btn ${index === activeArchetypeIndex ? 'active' : ''}`;
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-selected', index === activeArchetypeIndex ? 'true' : 'false');
+      btn.setAttribute('title', `Switch to format ${index + 1}: ${item.name}`);
+      btn.textContent = `${index + 1}`;
+      btn.addEventListener('click', () => {
         activeArchetypeIndex = index;
-        const selected = generatedArchetypes[index];
-        currentPrimaryPassword = selected.value;
-        if (primaryDisplay) primaryDisplay.textContent = currentPrimaryPassword;
-        if (activeCredentialBadge) activeCredentialBadge.textContent = selected.name;
-        computeMetrics(currentPrimaryPassword);
-        renderArchetypesList();
-        showToast(`Inspecting ${selected.name}`);
+        renderActiveArchetype();
+        showToast(`Viewing ${item.name} (${index + 1}/8)`);
       });
-
-      // Clicking copy icon button
-      const copyBtn = row.querySelector('.row-copy-icon-btn');
-      if (copyBtn) {
-        copyBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          copyToClipboard(item.value, () => {
-            copyBtn.classList.add('copied');
-            copyBtn.innerHTML = `
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            `;
-            setTimeout(() => {
-              copyBtn.classList.remove('copied');
-              copyBtn.innerHTML = `
-                <svg class="copy-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-              `;
-            }, 1800);
-            showToast(`Copied ${item.name} to clipboard`);
-          });
-        });
-      }
-
-      variationsList.appendChild(row);
+      archetypePipsTrack.appendChild(btn);
     });
   }
 
@@ -675,10 +672,6 @@
     if (strengthCrackTime) strengthCrackTime.textContent = crackTime;
     if (strengthEntropy) strengthEntropy.textContent = `${entropyBits} bits`;
 
-    if (overviewEntropyRating) overviewEntropyRating.textContent = rating;
-    if (overviewEntropyDesc) overviewEntropyDesc.textContent = `${entropyBits} bits Shannon`;
-    if (overviewCrackTime) overviewCrackTime.textContent = crackTime;
-
     // Segmented bar
     strengthSegments.forEach((seg, i) => {
       if (!seg) return;
@@ -690,17 +683,42 @@
     });
   }
 
-  // Visibility Toggle
+  // Visibility Toggle (Synchronously masks / reveals BOTH Primary and Archetype displays)
   function toggleVisibility() {
     isPasswordMasked = !isPasswordMasked;
+    applyMaskState();
+    showToast(isPasswordMasked ? 'All credentials masked' : 'All credentials revealed');
+  }
+
+  // Apply Masking State across all password displays
+  function applyMaskState() {
     if (primaryDisplay) {
       primaryDisplay.classList.toggle('masked', isPasswordMasked);
+    }
+    if (activeArchetypePassword) {
+      activeArchetypePassword.classList.toggle('masked', isPasswordMasked);
     }
     if (iconEyeOpen && iconEyeClosed) {
       iconEyeOpen.style.display = isPasswordMasked ? 'none' : 'block';
       iconEyeClosed.style.display = isPasswordMasked ? 'block' : 'none';
     }
-    showToast(isPasswordMasked ? 'Password masked' : 'Password revealed');
+  }
+
+  // Copy Active Archetype Credential
+  function copyActiveArchetype() {
+    const active = generatedArchetypes[activeArchetypeIndex];
+    if (!active) return;
+    copyToClipboard(active.value, () => {
+      if (btnCopyArchetype) {
+        btnCopyArchetype.classList.add('copied');
+        if (copyArchetypeLabel) copyArchetypeLabel.textContent = 'Copied';
+        setTimeout(() => {
+          btnCopyArchetype.classList.remove('copied');
+          if (copyArchetypeLabel) copyArchetypeLabel.textContent = 'Copy';
+        }, 1800);
+      }
+      showToast(`Copied ${active.name} to clipboard`);
+    });
   }
 
   // Copy Primary Credential
