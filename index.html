@@ -128,10 +128,6 @@
         <header class="console-header">
           <div class="console-brand-wrap">
             <h1 class="console-title">Ares Vault</h1>
-            <span class="sandbox-pill">
-              <span class="pulse-dot"></span>
-              Client-Side Sandbox
-            </span>
           </div>
 
           <div class="header-right-actions">
@@ -254,86 +250,8 @@
 
           </section>
 
-          <!-- Right Column: Metrics Overview + Era Scrubber + Seed Anchors + Complexity -->
+          <!-- Right Column: Era Scrubber + Seed Anchors + Complexity -->
           <section class="console-column column-right">
-
-            <!-- Top Row: Stacked Metrics & Circular Entropy Gauge (Inspired by Reference Overview) -->
-            <div class="overview-combo-grid">
-
-              <!-- Stacked 3 Metric Pills (like 108bpm, 2.5km, 1.7l in Reference) -->
-              <div class="stacked-metrics-col">
-                <div class="mini-metric-card">
-                  <div class="metric-icon-bubble">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                    </svg>
-                  </div>
-                  <div class="metric-info">
-                    <span class="metric-val" id="overview-entropy-rating">Fortress</span>
-                    <span class="metric-lbl" id="overview-entropy-desc">164 bits Shannon</span>
-                  </div>
-                </div>
-
-                <div class="mini-metric-card">
-                  <div class="metric-icon-bubble">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                  </div>
-                  <div class="metric-info">
-                    <span class="metric-val" id="overview-crack-time">Centuries</span>
-                    <span class="metric-lbl">Crack Resistance</span>
-                  </div>
-                </div>
-
-                <div class="mini-metric-card">
-                  <div class="metric-icon-bubble">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                    </svg>
-                  </div>
-                  <div class="metric-info">
-                    <span class="metric-val">8 Formats</span>
-                    <span class="metric-lbl">Deterministic Sync</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Circular Entropy Gauge (Inspired by the Donut chart in Reference Overview) -->
-              <div class="gauge-card">
-                <div class="gauge-header">
-                  <span class="gauge-title">Security Gauge</span>
-                  <span class="gauge-tag">Optimal</span>
-                </div>
-                <div class="gauge-body">
-                  <div class="donut-chart-wrap">
-                    <svg class="donut-svg" viewBox="0 0 100 100">
-                      <circle class="donut-track" cx="50" cy="50" r="38" />
-                      <circle class="donut-fill-gold" cx="50" cy="50" r="38" stroke-dasharray="238.76" stroke-dashoffset="60" />
-                      <circle class="donut-fill-cyan" cx="50" cy="50" r="38" stroke-dasharray="238.76" stroke-dashoffset="140" />
-                    </svg>
-                    <div class="donut-center-text">
-                      <span class="donut-percentage">98%</span>
-                      <span class="donut-sublabel">Entropy</span>
-                    </div>
-                  </div>
-                  <div class="gauge-stats-list">
-                    <div class="gauge-stat-row">
-                      <span class="stat-dot gold-dot"></span>
-                      <span class="stat-name">Char Variety</span>
-                      <span class="stat-val">4 / 4</span>
-                    </div>
-                    <div class="gauge-stat-row">
-                      <span class="stat-dot cyan-dot"></span>
-                      <span class="stat-name">Anchor Sets</span>
-                      <span class="stat-val">4 Active</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
 
             <!-- Birth Era Scrubber (EXACTLY inspired by the June 2023 calendar scrubber in Reference) -->
             <article class="glass-subcard era-scrubber-card" id="section-era">
