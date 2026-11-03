@@ -244,6 +244,19 @@
       btnCopyArchetype.addEventListener('click', copyActiveArchetype);
     }
 
+    // Static Pip Buttons
+    if (archetypePipsTrack) {
+      const pipBtns = archetypePipsTrack.querySelectorAll('.archetype-pip-btn');
+      pipBtns.forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+          activeArchetypeIndex = index;
+          renderActiveArchetype();
+          const item = generatedArchetypes[index];
+          if (item) showToast(`Viewing ${item.name} (${index + 1}/8)`);
+        });
+      });
+    }
+
     // Copy All
     if (btnCopyAll) {
       btnCopyAll.addEventListener('click', copyAllArchetypes);
@@ -608,22 +621,33 @@
   // Render 8 numbered quick-switch capsules
   function renderArchetypePips() {
     if (!archetypePipsTrack) return;
-    archetypePipsTrack.innerHTML = '';
-    generatedArchetypes.forEach((item, index) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = `archetype-pip-btn ${index === activeArchetypeIndex ? 'active' : ''}`;
-      btn.setAttribute('role', 'tab');
-      btn.setAttribute('aria-selected', index === activeArchetypeIndex ? 'true' : 'false');
-      btn.setAttribute('title', `Switch to format ${index + 1}: ${item.name}`);
-      btn.textContent = `${index + 1}`;
-      btn.addEventListener('click', () => {
-        activeArchetypeIndex = index;
-        renderActiveArchetype();
-        showToast(`Viewing ${item.name} (${index + 1}/8)`);
+    const pipBtns = archetypePipsTrack.querySelectorAll('.archetype-pip-btn');
+    if (pipBtns.length === generatedArchetypes.length) {
+      pipBtns.forEach((btn, index) => {
+        const item = generatedArchetypes[index];
+        const isActive = index === activeArchetypeIndex;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        if (item) btn.setAttribute('title', `Switch to format ${index + 1}: ${item.name}`);
       });
-      archetypePipsTrack.appendChild(btn);
-    });
+    } else {
+      archetypePipsTrack.innerHTML = '';
+      generatedArchetypes.forEach((item, index) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `archetype-pip-btn ${index === activeArchetypeIndex ? 'active' : ''}`;
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-selected', index === activeArchetypeIndex ? 'true' : 'false');
+        btn.setAttribute('title', `Switch to format ${index + 1}: ${item.name}`);
+        btn.textContent = `${index + 1}`;
+        btn.addEventListener('click', () => {
+          activeArchetypeIndex = index;
+          renderActiveArchetype();
+          showToast(`Viewing ${item.name} (${index + 1}/8)`);
+        });
+        archetypePipsTrack.appendChild(btn);
+      });
+    }
   }
 
   // Calculate Shannon Entropy & Crack Resistance

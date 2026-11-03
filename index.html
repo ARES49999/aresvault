@@ -16,43 +16,17 @@
 </head>
 <body>
 
-    <!-- Atmospheric Celestial Engine: Original Day Sky vs Midnight Starry Sky -->
+      <!-- Atmospheric Celestial Canvas: Seamless Day Sky vs Starry Midnight Sky -->
   <div class="ambient-backdrop" aria-hidden="true">
 
-    <!-- Day Sky Layer (Active in Light Mode: Original Airy Stratosphere) -->
+    <!-- Day Sky Layer (Active in Light Mode: Seamless Luminous Stratosphere) -->
     <div class="sky-scene day-sky-scene">
-      <div class="sky-base-gradient day-sky-base"></div>
-      <div class="solar-radiance-aura"></div>
-      <svg class="day-atmosphere-svg" viewBox="0 0 1920 1080" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="dayAtmosphereGrad" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22" />
-            <stop offset="50%" stop-color="#7dd3fc" stop-opacity="0.10" />
-            <stop offset="100%" stop-color="#0284c7" stop-opacity="0" />
-          </linearGradient>
-          <linearGradient id="cirrusBand1" x1="0" y1="0" x2="1920" y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
-            <stop offset="30%" stop-color="#ffffff" stop-opacity="0.16" />
-            <stop offset="70%" stop-color="#ffffff" stop-opacity="0.22" />
-            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
-          </linearGradient>
-          <linearGradient id="cirrusBand2" x1="0" y1="0" x2="1920" y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.05" />
-            <stop offset="50%" stop-color="#ffffff" stop-opacity="0.14" />
-            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
-          </linearGradient>
-        </defs>
-        <!-- High-altitude airy cirrus atmosphere (original, not cartoon clouds) -->
-        <path d="M-80 320 C360 240, 820 380, 1260 290 C1620 220, 1860 270, 2020 240 L2020 290 C1780 330, 1520 280, 1180 350 C760 430, 320 290, -80 370 Z" fill="url(#cirrusBand1)" />
-        <path d="M-80 540 C280 470, 720 580, 1180 500 C1540 440, 1820 490, 2020 460 L2020 500 C1740 540, 1440 500, 1120 560 C680 630, 260 520, -80 590 Z" fill="url(#cirrusBand2)" />
-      </svg>
-      <div class="sky-horizon-haze day-horizon-haze"></div>
+      <div class="day-sky-canvas"></div>
     </div>
 
-    <!-- Night Sky Layer (Active in Dark Mode: Deep Midnight Blue with Dot-Like Stars) -->
+    <!-- Night Sky Layer (Active in Dark Mode: Deep Midnight Blue with Stationary Dot-Like Stars) -->
     <div class="sky-scene night-sky-scene">
-      <div class="sky-base-gradient night-sky-base"></div>
-      <div class="lunar-radiance-aura"></div>
+      <div class="night-sky-canvas"></div>
       <svg class="night-starfield-svg" viewBox="0 0 1920 1080" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
 <circle cx="1774" cy="1048" r="1.6" fill="#ffffff" opacity="0.71" class="star-dot twinkle-a"/>
 <circle cx="1416" cy="1005" r="0.6" fill="#ffffff" opacity="0.76" class="star-dot"/>
@@ -275,7 +249,6 @@
 <circle cx="622" cy="910" r="0.6" fill="#e0f2fe" opacity="0.48" class="star-dot"/>
 <circle cx="1844" cy="324" r="1.6" fill="#e0f2fe" opacity="0.76" class="star-dot twinkle-a"/>
       </svg>
-      <div class="sky-horizon-haze night-horizon-haze"></div>
     </div>
 
   </div>
@@ -487,7 +460,7 @@
                 </div>
               </div>
 
-              <!-- Single Active Archetype Showcase Card -->
+                            <!-- Single Active Archetype Showcase Card -->
               <div class="active-archetype-showcase" id="active-archetype-card">
                 <div class="archetype-card-meta">
                   <div class="archetype-meta-main">
@@ -503,8 +476,8 @@
                   </div>
                   <div class="archetype-meta-right">
                     <span class="status-pill-badge pill-ongoing" id="archetype-category-badge">Fortress</span>
-                    <button type="button" class="card-action-btn copy-btn" id="btn-copy-archetype" title="Copy active archetype to clipboard">
-                      <svg class="copy-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <button type="button" class="copy-archetype-btn" id="btn-copy-archetype" title="Copy active archetype to clipboard">
+                      <svg class="copy-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                       </svg>
@@ -515,12 +488,19 @@
 
                 <!-- Active Archetype Monospace Display (Masks with primary display) -->
                 <div class="password-monolith-box archetype-monolith-box">
-                  <span id="active-archetype-password" class="password-text-string">Cr1ms0n#Ar3s$!00$T1t4n@*8rv</span>
+                  <span id="active-archetype-password" class="password-text-string">Cr1ms0n#Ar3s00@*8rv</span>
                 </div>
 
                 <!-- Numbered Capsule Switcher Track: 8 interactive pips -->
                 <div class="archetype-pips-track" id="archetype-pips-track" role="tablist" aria-label="Archetype Quick Switcher">
-                  <!-- Generated by app.js -->
+                  <button type="button" class="archetype-pip-btn active" data-pip-index="0" role="tab" aria-selected="true" title="1. Fortress Tactical">1</button>
+                  <button type="button" class="archetype-pip-btn" data-pip-index="1" role="tab" aria-selected="false" title="2. Memorable Passphrase">2</button>
+                  <button type="button" class="archetype-pip-btn" data-pip-index="2" role="tab" aria-selected="false" title="3. Developer CLI Token">3</button>
+                  <button type="button" class="archetype-pip-btn" data-pip-index="3" role="tab" aria-selected="false" title="4. Alphanumeric PIN">4</button>
+                  <button type="button" class="archetype-pip-btn" data-pip-index="4" role="tab" aria-selected="false" title="5. Ultra High-Entropy">5</button>
+                  <button type="button" class="archetype-pip-btn" data-pip-index="5" role="tab" aria-selected="false" title="6. Compact Mobile">6</button>
+                  <button type="button" class="archetype-pip-btn" data-pip-index="6" role="tab" aria-selected="false" title="7. Enterprise Compliant">7</button>
+                  <button type="button" class="archetype-pip-btn" data-pip-index="7" role="tab" aria-selected="false" title="8. Kebab Identifier">8</button>
                 </div>
               </div>
             </article>

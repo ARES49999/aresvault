@@ -145,21 +145,25 @@ body {
   pointer-events: none;
 }
 
-.sky-base-gradient {
+/* Seamless Sky Canvases (Day Stratosphere vs Midnight Starfield) */
+.day-sky-canvas {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 82% 16%, rgba(255, 255, 255, 0.42) 0%, rgba(224, 242, 254, 0.22) 28%, transparent 60%),
+              radial-gradient(circle at 18% 78%, rgba(219, 234, 254, 0.28) 0%, transparent 45%),
+              linear-gradient(175deg, #1d74db 0%, #2884eb 26%, #4ba2f7 55%, #8ecbfe 82%, #c9e6fe 100%);
 }
 
-.day-sky-base {
-  background: linear-gradient(175deg, #0284c7 0%, #0ea5e9 25%, #38bdf8 55%, #7dd3fc 82%, #bae6fd 100%);
-}
-
-.night-sky-base {
-  background: radial-gradient(circle at 12% 18%, #0d2a5c 0%, #051024 45%, transparent 75%),
-              radial-gradient(circle at 86% 22%, #143770 0%, #06132a 50%, transparent 80%),
-              linear-gradient(180deg, #020612 0%, #071730 25%, #0e2b56 55%, #153e78 82%, #1d5096 100%);
+.night-sky-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 82% 18%, rgba(37, 99, 235, 0.22) 0%, rgba(15, 23, 42, 0.05) 35%, transparent 65%),
+              radial-gradient(circle at 16% 22%, rgba(29, 78, 216, 0.18) 0%, transparent 50%),
+              linear-gradient(180deg, #020713 0%, #06152e 22%, #0b2246 50%, #113464 78%, #18447e 100%);
 }
 
 /* Visibility Control based on Theme (Default: Night Sky, Light: Day Sky) */
@@ -181,101 +185,54 @@ body {
   visibility: hidden;
 }
 
-/* Day Mode Solar Radiance */
-.solar-radiance-aura {
-  position: absolute;
-  top: 0;
-  right: 5%;
-  width: 65vw;
-  height: 65vh;
-  background: radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.48) 0%, rgba(254, 240, 138, 0.28) 25%, rgba(147, 197, 253, 0.08) 55%, transparent 75%);
-  pointer-events: none;
-}
-
-/* Night Mode Lunar / Celestial Radiance */
-.lunar-radiance-aura {
-  position: absolute;
-  top: 0;
-  right: 5%;
-  width: 65vw;
-  height: 65vh;
-  background: radial-gradient(circle at 78% 18%, rgba(186, 230, 253, 0.22) 0%, rgba(96, 165, 250, 0.09) 35%, transparent 70%);
-  pointer-events: none;
-}
-
-/* Atmospheric SVGs */
-.day-atmosphere-svg,
+/* Night Starfield SVG */
 .night-starfield-svg {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
 }
 
-/* Horizon Haze */
-.sky-horizon-haze {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 28vh;
-  pointer-events: none;
-}
-.day-horizon-haze {
-  background: linear-gradient(to top, rgba(219, 234, 254, 0.45) 0%, transparent 100%);
-}
-.night-horizon-haze {
-  background: linear-gradient(to top, rgba(24, 68, 126, 0.38) 0%, transparent 100%);
-}
-
-/* Starfield Twinkle Animations */
-@keyframes starPulseA {
-  0%, 100% { opacity: 0.35; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.15); }
-}
-@keyframes starPulseB {
-  0%, 100% { opacity: 0.95; transform: scale(1.1); }
-  50% { opacity: 0.25; transform: scale(0.85); }
-}
-@keyframes starPulseC {
-  0%, 100% { opacity: 0.55; transform: scale(1); }
-  50% { opacity: 0.15; transform: scale(0.75); }
-}
-@keyframes starPulseD {
-  0%, 100% { opacity: 0.2; transform: scale(0.8); }
-  50% { opacity: 0.9; transform: scale(1.2); }
-}
-
-.twinkle-a { animation: starPulseA 3.6s ease-in-out infinite; }
-.twinkle-b { animation: starPulseB 4.4s ease-in-out infinite; }
-.twinkle-c { animation: starPulseC 3.0s ease-in-out infinite; }
-.twinkle-d { animation: starPulseD 5.2s ease-in-out infinite; }
-
-/* Pure Dot-Like Starfield Styling */
+/* Stationary Dot-Like Starfield: 100% Still, Only Shimmering Opacity */
 .star-dot {
-  transform-box: fill-box;
-  transform-origin: center;
+  /* ZERO transform, ZERO translate, ZERO scale - 100% stationary */
+}
+
+@keyframes starShimmerA {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.95; }
+}
+
+@keyframes starShimmerB {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 0.20; }
+}
+
+@keyframes starShimmerC {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@keyframes starShimmerD {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.80; }
 }
 
 .star-dot.twinkle-a {
-  animation: starPulseA 3.6s ease-in-out infinite;
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+  animation: starShimmerA 3.6s ease-in-out infinite;
 }
 
 .star-dot.twinkle-b {
-  animation: starPulseB 4.4s ease-in-out infinite;
-  filter: drop-shadow(0 0 2px rgba(186, 230, 253, 0.8));
+  animation: starShimmerB 4.4s ease-in-out infinite;
 }
 
 .star-dot.twinkle-c {
-  animation: starPulseC 3.0s ease-in-out infinite;
-  filter: drop-shadow(0 0 2px rgba(254, 240, 138, 0.8));
+  animation: starShimmerC 3.0s ease-in-out infinite;
 }
 
 .star-dot.twinkle-d {
-  animation: starPulseD 5.2s ease-in-out infinite;
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+  animation: starShimmerD 5.2s ease-in-out infinite;
 }
 
 /* ==========================================================================
@@ -864,6 +821,34 @@ body {
   align-items: center;
   gap: 0.65rem;
   flex-shrink: 0;
+}
+
+.copy-archetype-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 32px;
+  padding: 0 0.95rem;
+  border-radius: 999px;
+  background: var(--btn-primary-bg);
+  border: 1px solid var(--glass-subcard-border);
+  color: var(--btn-primary-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.copy-archetype-btn:hover {
+  background: var(--btn-primary-hover);
+  transform: translateY(-1px);
+}
+
+.copy-archetype-btn.copied {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  color: #10b981;
 }
 
 .archetype-monolith-box {
